@@ -2,10 +2,10 @@ package se.kth.olof.beyar.labb4.examples;
 /*
  Netbeans and resources, for example images, to be used by the application:
  ---------------------------------------------------------------------------
- For the specific project, right-click on ”Sources Packages” and select New/Folder; 
- name the folder, for example ”resources”. Copy images, and other resources, to the 
+ For the specific project, right-click on ”Sources Packages” and select New/Folder;
+ name the folder, for example ”resources”. Copy images, and other resources, to the
  new folder.
- Load the resource in the application code, e.g. an image: 
+ Load the resource in the application code, e.g. an image:
  Image im = new Image(”resources/devil.png”);
 */
 
@@ -20,7 +20,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
 import java.net.URL;
 
 public class ImageAndGraphicsContext extends Application {

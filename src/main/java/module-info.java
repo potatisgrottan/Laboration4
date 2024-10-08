@@ -1,5 +1,5 @@
 module se.kth.olof.beyar.labb4 {
-    requires javafx.controls;
+    requires transitive javafx.controls;
     requires javafx.fxml;
     requires javafx.swing;
 

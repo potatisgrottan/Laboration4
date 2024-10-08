@@ -1,7 +1,6 @@
 package se.kth.olof.beyar.labb4.examples;
 
 import java.net.URL;
-import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -17,7 +16,7 @@ import javafx.stage.Stage;
 public class TimerExample extends Application {
 
 	private ImageView imView;
-	
+
     @Override
     public void start(Stage stage) {
         // Load the image
@@ -37,7 +36,7 @@ public class TimerExample extends Application {
         stage.setScene(scene);
         stage.sizeToScene();
         stage.show();
-        
+
         imView.setOnMouseClicked(new EventHandler<MouseEvent>() {
         	@Override
         	public void handle(MouseEvent event) {
@@ -47,13 +46,13 @@ public class TimerExample extends Application {
         	}
         });
     }
-    
+
     private class RotateBackTask extends TimerTask {
     	@Override
     	public void run() {
     		imView.setRotate(0); // rotate back
     	}
-    };
+    }
 
     public static void main(String[] args) {
         launch(args);
