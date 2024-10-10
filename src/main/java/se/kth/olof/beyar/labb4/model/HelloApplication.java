@@ -1,4 +1,4 @@
-package se.kth.olof.beyar.labb4;
+package se.kth.olof.beyar.labb4.model;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

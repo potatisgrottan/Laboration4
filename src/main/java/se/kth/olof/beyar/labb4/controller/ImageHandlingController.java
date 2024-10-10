@@ -1,7 +1,7 @@
-package se.kth.olof.beyar.labb4.labboration4.Controller;
+package se.kth.olof.beyar.labb4.controller;
 
-import se.kth.olof.beyar.labb4.labboration4.Model.*;
-import se.kth.olof.beyar.labb4.labboration4.View.*;
+import se.kth.olof.beyar.labb4.model.*;
+import se.kth.olof.beyar.labb4.view.*;
 
 public class ImageHandlingController {
 

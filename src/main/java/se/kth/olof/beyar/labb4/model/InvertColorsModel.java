@@ -1,6 +1,6 @@
-package se.kth.olof.beyar.labb4.labboration4.Model;
+package se.kth.olof.beyar.labb4.model;
 
-import se.kth.olof.beyar.labb4.labboration4.Interface.IProcessor;
+import se.kth.olof.beyar.labb4.controller.IProcessor;
 
 public class InvertColorsModel implements IProcessor {
     @Override
