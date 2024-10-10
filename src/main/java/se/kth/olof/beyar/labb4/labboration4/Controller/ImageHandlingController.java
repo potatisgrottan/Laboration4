@@ -15,11 +15,10 @@ public class ImageHandlingController {
     private final InvertColorsView iView;
     private final ContrastView cView;
 
-    public ImageHandlingController(HistogramModel hModel, GrayScaleModel gModel,
-                                   InvertColorsModel iModel, ContrastModel cModel,
-                                   HistogramView hView, GrayScaleView gView,
-                                   InvertColorsView iView, ContrastView cView){
-
+    public ImageHandlingController(HistogramModel hModel, GrayScaleModel gModel, InvertColorsModel iModel,
+                                   ContrastModel cModel, HistogramView hView, GrayScaleView gView,
+                                   InvertColorsView iView, ContrastView cView)
+    {
         this.hModel = hModel;
         this.gModel = gModel;
         this.iModel = iModel;
