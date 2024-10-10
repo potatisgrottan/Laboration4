@@ -3,6 +3,9 @@ module se.kth.olof.beyar.labb4 {
     requires javafx.fxml;
     requires javafx.swing;
 
+    exports se.kth.olof.beyar.labb4;
+    opens se.kth.olof.beyar.labb4 to javafx.fxml;
+
     exports se.kth.olof.beyar.labb4.examples;
     opens se.kth.olof.beyar.labb4.examples to javafx.fxml;
 

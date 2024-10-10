@@ -67,7 +67,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                se.kth.olof.beyar.labb4/se.kth.olof.beyar.labb4.model.Main
+                                se.kth.olof.beyar.labb4/se.kth.olof.beyar.labb4.Main
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
