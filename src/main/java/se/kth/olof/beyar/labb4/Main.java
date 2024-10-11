@@ -30,10 +30,18 @@ public class Main extends Application {
         assert resource != null;
         Image image = new Image(resource.toString());
 
+        Button updateButton = new Button("Update");
+        FlowPane pane = new FlowPane();
+        pane.setAlignment(Pos.BOTTOM_LEFT);
+        // v: top, v1: right, v2: bottom, v3: left
+        pane.setPadding(new Insets(0, 0, 100, 10));
+        pane.getChildren().add(updateButton);
+
         ImageView firstView = new ImageView();
         firstView.setImage(image);
 
         HBox root = new HBox();
+        root.getChildren().add(pane);
         root.getChildren().add(firstView);
 
         Scene scene = new Scene(root);
