@@ -24,6 +24,7 @@ public class ImageViewExample extends Application {
 
     @Override
     public void start(Stage stage) {
+
         // Load the image - see comment above on where to place the image file.
         URL resource = this.getClass().getResource("/images/skull_ct.png");
         assert resource != null;
@@ -33,8 +34,8 @@ public class ImageViewExample extends Application {
         ImageView firstView = new ImageView();
         firstView.setImage(image); // toGrayScale(image) - image ops
 
-        // Resize the image to have width of 100 pxs while preserving the ratio 
-        // and using higher quality filtering method. NB - we are using 
+        // Resize the image to have width of 100 pxs while preserving the ratio
+        // and using higher quality filtering method. NB - we are using
         // the same image object.
         ImageView secondView = new ImageView();
         secondView.setImage(image);
@@ -69,7 +70,7 @@ public class ImageViewExample extends Application {
     Using WritableImage and PixelReader/Writer
     to manipulate the pixels of an image object.
 
-    To get an int[] representing the pixels, 
+    To get an int[] representing the pixels,
     use PixelReader.getPixels.
     */
     private static Image toGrayScale(Image origImg) {
@@ -78,14 +79,14 @@ public class ImageViewExample extends Application {
         int height = (int) origImg.getHeight();
         System.out.println("width = " + width + ", height = " + height);
         System.out.println("Pixel Format: " + origPixels.getPixelFormat());
-        
+
         WritableImage outImg = new WritableImage(width, height);
         PixelWriter outPixels = outImg.getPixelWriter();
         for(int x = 0; x < width; x++) {
             for(int y = 0; y < height; y++) {
                 Color color = origPixels.getColor(x, y);
-                double ave = (color.getRed() 
-                        + color.getGreen() 
+                double ave = (color.getRed()
+                        + color.getGreen()
                         + color.getRed())/3.0;
                 Color gray = Color.color(ave, ave, ave);
                 outPixels.setColor(x, y, gray);
@@ -95,3 +96,4 @@ public class ImageViewExample extends Application {
         return outImg;
     }
 }
+
