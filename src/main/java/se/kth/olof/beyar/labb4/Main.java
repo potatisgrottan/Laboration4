@@ -6,15 +6,18 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.layout.VBox;
+import se.kth.olof.beyar.labb4.model.ImageHistogram;
 
 import java.net.URL;
 
@@ -37,18 +40,14 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage stage) {
+        // Skapar menubar instans temporärt tills vi har egna modeller
+        createMenuBar();
+        MenuBar menuBar = getMenubar();
+
         // Laddar exempelbilden från resursmappen
         URL resource = this.getClass().getResource("/images/skull_ct.png");
         assert resource != null;
         Image image = new Image(resource.toString());
-
-        // Skapar och konfigurerar uppdateringsknappen
-        Button updateButton = new Button("Update");
-        FlowPane pane = new FlowPane();
-        pane.setAlignment(Pos.BOTTOM_LEFT);
-        pane.setPadding(new Insets(0, 0, 100, 10));
-        pane.getChildren().add(updateButton);
-        updateButton.setOnAction(_ -> { System.out.println("Update button was clicked!"); });
 
         // Skapar en ImageView för att visa bilden
         ImageView firstView = new ImageView();
@@ -56,30 +55,29 @@ public class Main extends Application {
 
         // Skapar horizontell split mellan två vyer och lägger till komponenter
         HBox hbox = new HBox();
-        hbox.getChildren().add(pane);
         hbox.getChildren().add(firstView);
 
         // Ny text område längst ner
         FlowPane textPane = new FlowPane();
         textPane.setPadding(new Insets(25));
-        textPane.getChildren().add(new Text("Hello, world!"));
-
-        // Skapar menubar instans temporärt tills vi har egna modeller
-        createMenuBar();
-        MenuBar menuBar = getMenubar();
+        textPane.getChildren().add(new Text("Histogram generated."));
 
         // Skapar en vertikal split
-        VBox root = new VBox();
-        root.getChildren().add(menuBar);
-        root.getChildren().add(hbox);
-        root.getChildren().add(textPane);
+        VBox vbox = new VBox();
+        vbox.getChildren().add(menuBar);
+        vbox.getChildren().add(hbox);
+        vbox.getChildren().add(textPane);
+
+        // Skapar en stackpane som vi kan lagra komponenterna på
+        StackPane root = new StackPane();
+        root.getChildren().add(vbox);
 
         // Konfigurerar och visar huvudscenen
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.sizeToScene();
         stage.setResizable(true);
-        stage.setTitle("Image editor");
+        stage.setTitle("Image Processing");
         stage.show();
     }
 
