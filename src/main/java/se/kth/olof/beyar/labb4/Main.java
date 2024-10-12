@@ -66,7 +66,6 @@ public class Main extends Application {
         final LineChart<String, Number> chartHistogram = new LineChart<>(xAxis, yAxis);
         chartHistogram.setCreateSymbols(false);
 
-
         updateButton.setOnAction(_ -> {
             firstView.setImage(wImage);
             imageView.setImage(image);
@@ -84,29 +83,31 @@ public class Main extends Application {
                 );
             }
 
-            if (colorFilterSwitch == 0)
-            {
-                new ImageColor(image, wImage);
-            }
-            else if(colorFilterSwitch == 1)
-            {
+            ogPicture = MatrixImageConverter.imageToIntMatrix(image);
+
+            if (colorFilterSwitch == 0) {
                 ogPicture = MatrixImageConverter.imageToIntMatrix(image);
+            } else if (colorFilterSwitch == 1) {
                 ImageGrayScale gray = new ImageGrayScale();
                 ogPicture = gray.processImage(ogPicture);
-                wImage = MatrixImageConverter.intMatrixToImage(ogPicture);
-            }
-            else if (colorFilterSwitch == 2)
-            {
-                ogPicture = MatrixImageConverter.imageToIntMatrix(image);
+            } else if (colorFilterSwitch == 2) {
                 ImageInvertColor invert = new ImageInvertColor();
                 ogPicture = invert.processImage(ogPicture);
-                wImage = MatrixImageConverter.intMatrixToImage(ogPicture);
+            } else {
+                throw new IllegalStateException("We should not be able to increment to this level: " + colorFilterSwitch);
             }
 
-            colorFilterSwitch++;
-            System.out.println("Vi är: " + colorFilterSwitch);
-        });
+            assert (ogPicture != null);
+            wImage = MatrixImageConverter.intMatrixToImage(ogPicture);
 
+            // Update the image view
+            firstView.setImage(wImage);
+
+            if (colorFilterSwitch == 2)
+                colorFilterSwitch = 0;
+            else
+                colorFilterSwitch++;
+        });
 
         // Kör update första gången den renderas så man ser histogrammet
         updateButton.fire();
