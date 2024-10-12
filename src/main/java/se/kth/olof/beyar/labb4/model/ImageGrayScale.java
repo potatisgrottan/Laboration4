@@ -4,7 +4,8 @@ import se.kth.olof.beyar.labb4.controller.IProcessor;
 
 public class ImageGrayScale implements IProcessor {
 
-    public ImageGrayScale(){}
+    public ImageGrayScale() {}
+
     @Override
     public int[][] processImage(int[][] originalImage) {
         int height = originalImage.length;
@@ -27,6 +28,7 @@ public class ImageGrayScale implements IProcessor {
                 processedImage[y][x]=grayScaleArgb;
             }
         }
+
         return processedImage;
     }
 }
