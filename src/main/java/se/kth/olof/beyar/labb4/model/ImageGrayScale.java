@@ -1,35 +1,32 @@
 package se.kth.olof.beyar.labb4.model;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
-import javafx.scene.paint.Color;
+import se.kth.olof.beyar.labb4.controller.IProcessor;
 
-public class ImageGrayScale {
+public class ImageGrayScale implements IProcessor {
 
-    private WritableImage grayScaleImage;
-    private Image image;
-    private double grayColor;
+    public ImageGrayScale(){}
+    @Override
+    public int[][] processImage(int[][] originalImage) {
+        int height = originalImage.length;
+        int width = originalImage[0].length;
+        int[][] processedImage = new int[height][width];
 
-    public ImageGrayScale(Image src, WritableImage wsrc){
-        image=src;
-        grayScaleImage=wsrc;
-        PixelWriter pixelWriter = grayScaleImage.getPixelWriter();
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
 
+                int argb=originalImage[y][x];
 
-        for (int y = 0; y < image.getHeight(); y++) {
-            for (int x = 0; x < image.getWidth(); x++) {
-                Color color = image.getPixelReader().getColor(x,y);
+                int a = 0xff & (argb >> 24);
+                int r = 0xff & (argb >> 16);
+                int g = 0xff & (argb >> 8);
+                int b = 0xff & argb;
 
-                grayColor= (color.getBlue()+color.getRed()+color.getGreen())/3;
+                r = g = b = (r+g+b)/3;
 
-                Color grayScaleColor = new Color(grayColor, grayColor,
-                        grayColor, color.getOpacity());
-
-                pixelWriter.setColor(x,y,grayScaleColor);
-
+                int grayScaleArgb = (a<<24) | (r<<16) | (g<<8) | b;
+                processedImage[y][x]=grayScaleArgb;
             }
         }
-
+        return processedImage;
     }
 }

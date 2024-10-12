@@ -8,9 +8,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
+import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -21,7 +19,11 @@ import java.net.URL;
 
 public class Main extends Application {
     private MenuBar menubar;
+
     private int colorFilterSwitch = 0;
+    private int[][]ogPicture;
+    private WritableImage wImage;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -46,11 +48,8 @@ public class Main extends Application {
         URL resource = this.getClass().getResource("/images/shrek.png");
         assert resource != null;
         Image image = new Image(resource.toString());
-        //invertera bild
-        WritableImage wImage = new WritableImage((int)image.getWidth(),(int)image.getHeight());
-
-
-
+        ogPicture = MatrixImageConverter.imageToIntMatrix(image);
+        wImage = MatrixImageConverter.intMatrixToImage(ogPicture);
         // Skapar en ImageView för att visa bilden
         ImageView firstView = new ImageView();
         firstView.setImage(image);
@@ -82,13 +81,20 @@ public class Main extends Application {
                         imageHistogram.getSeriesBlue()
                 );
             }
-
             if(colorFilterSwitch==0){
-                ImageInvertColor invert = new ImageInvertColor(image,wImage);
+                ogPicture = MatrixImageConverter.imageToIntMatrix(image);
+                ImageInvertColor invert = new ImageInvertColor();
+                ogPicture = invert.processImage(ogPicture);
+                wImage = MatrixImageConverter.intMatrixToImage(ogPicture);
                 colorFilterSwitch++;
             }
             else{
-                ImageGrayScale grayScale=new ImageGrayScale(image,wImage);
+                ogPicture = MatrixImageConverter.imageToIntMatrix(image);
+                ImageGrayScale gray = new ImageGrayScale();
+                ogPicture = gray.processImage(ogPicture);
+                wImage = MatrixImageConverter.intMatrixToImage(ogPicture);
+                colorFilterSwitch=0;
+
             }
         });
 

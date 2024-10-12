@@ -1,33 +1,33 @@
 package se.kth.olof.beyar.labb4.model;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
-import javafx.scene.paint.Color;
+import se.kth.olof.beyar.labb4.controller.IProcessor;
 
-public class ImageInvertColor {
+public class ImageInvertColor implements IProcessor {
 
-    private WritableImage wImage;
-    private Image image;
+    public ImageInvertColor(){}
+    @Override
+    public int[][] processImage(int[][] originalImage) {
+        int height = originalImage.length;
+        int width = originalImage[0].length;
+        int[][] processedImage = new int[height][width];
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
 
-    public ImageInvertColor(Image src, WritableImage wsrc){
-        image=src;
-        wImage=wsrc;
-        PixelWriter pixelWriter = wImage.getPixelWriter();
+                int argb=originalImage[y][x];
 
+                int a = 0xff & (argb >> 24);
+                int r = 0xff & (argb >> 16);
+                int g = 0xff & (argb >> 8);
+                int b = 0xff & argb;
 
-        for (int y = 0; y < image.getHeight(); y++) {
-            for (int x = 0; x < image.getWidth(); x++) {
-                Color color = image.getPixelReader().getColor(x,y);
+                r = 255-r;
+                g = 255-g;
+                b = 255-b;
 
-                Color invertedColor = new Color(
-                        1.0-color.getRed(),1.0- color.getGreen(),
-                        1.0-color.getBlue(), color.getOpacity());
-
-                pixelWriter.setColor(x,y,invertedColor);
-
+                int invertedArgb = (a<<24) | (r<<16) | (g<<8) | b;
+                processedImage[y][x]=invertedArgb;
             }
         }
-
+        return processedImage;
     }
 }
