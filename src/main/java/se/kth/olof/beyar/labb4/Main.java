@@ -72,7 +72,7 @@ public class Main extends Application {
             chartHistogram.getData().clear();
 
             // Egentligen ska skötas via Controller, ImageHistogram ska vara privat model
-            ImageHistogram imageHistogram = new ImageHistogram(image);
+            ImageHistogram<String, Number> imageHistogram = new ImageHistogram<>(image);
 
             if (imageHistogram.isSuccess()) {
                 chartHistogram.getData().addAll(
@@ -84,11 +84,11 @@ public class Main extends Application {
             }
 
             if(colorFilterSwitch==0){
-                ImageInvertColor invert = new ImageInvertColor(image,wImage);
+                new ImageInvertColor(image,wImage);
                 colorFilterSwitch++;
             }
             else{
-                ImageGrayScale grayScale=new ImageGrayScale(image,wImage);
+                new ImageGrayScale(image,wImage);
             }
         });
 

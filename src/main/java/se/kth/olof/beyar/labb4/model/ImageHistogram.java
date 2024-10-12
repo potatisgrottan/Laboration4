@@ -5,7 +5,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 
 // Code from https://java-buddy.blogspot.com/2015/07/display-images-histogram-on-javafx.html
-public class ImageHistogram {
+@SuppressWarnings("unchecked")
+public class ImageHistogram<K, V> {
     private Image image;
 
     private long alpha[] = new long[256];
@@ -13,10 +14,10 @@ public class ImageHistogram {
     private long green[] = new long[256];
     private long blue[] = new long[256];
 
-    XYChart.Series seriesAlpha;
-    XYChart.Series seriesRed;
-    XYChart.Series seriesGreen;
-    XYChart.Series seriesBlue;
+    XYChart.Series<K, V> seriesAlpha;
+    XYChart.Series<K, V> seriesRed;
+    XYChart.Series<K, V> seriesGreen;
+    XYChart.Series<K, V> seriesBlue;
 
     private boolean success;
 
@@ -51,10 +52,10 @@ public class ImageHistogram {
             }
         }
 
-        seriesAlpha = new XYChart.Series();
-        seriesRed = new XYChart.Series();
-        seriesGreen = new XYChart.Series();
-        seriesBlue = new XYChart.Series();
+        seriesAlpha = new XYChart.Series<K, V>();
+        seriesRed = new XYChart.Series<K, V>();
+        seriesGreen = new XYChart.Series<K, V>();
+        seriesBlue = new XYChart.Series<K, V>();
         seriesAlpha.setName("alpha");
         seriesRed.setName("red");
         seriesGreen.setName("green");
@@ -63,10 +64,16 @@ public class ImageHistogram {
         //copy alpha[], red[], green[], blue[]
         //to seriesAlpha, seriesRed, seriesGreen, seriesBlue
         for (int i = 0; i < 256; i++) {
-            seriesAlpha.getData().add(new XYChart.Data(String.valueOf(i), alpha[i]));
-            seriesRed.getData().add(new XYChart.Data(String.valueOf(i), red[i]));
-            seriesGreen.getData().add(new XYChart.Data(String.valueOf(i), green[i]));
-            seriesBlue.getData().add(new XYChart.Data(String.valueOf(i), blue[i]));
+            K key = (K) String.valueOf(i);
+            V alphaValue = (V) Long.valueOf(alpha[i]);
+            V redValue = (V) Long.valueOf(red[i]);
+            V greenValue = (V) Long.valueOf(green[i]);
+            V blueValue = (V) Long.valueOf(blue[i]);
+
+            seriesAlpha.getData().add(new XYChart.Data<>(key, alphaValue));
+            seriesRed.getData().add(new XYChart.Data<>(key, redValue));
+            seriesGreen.getData().add(new XYChart.Data<>(key, greenValue));
+            seriesBlue.getData().add(new XYChart.Data<>(key, blueValue));
         }
 
         success = true;
@@ -76,19 +83,19 @@ public class ImageHistogram {
         return success;
     }
 
-    public XYChart.Series getSeriesAlpha() {
+    public XYChart.Series<K, V> getSeriesAlpha() {
         return seriesAlpha;
     }
 
-    public XYChart.Series getSeriesRed() {
+    public XYChart.Series<K, V> getSeriesRed() {
         return seriesRed;
     }
 
-    public XYChart.Series getSeriesGreen() {
+    public XYChart.Series<K, V> getSeriesGreen() {
         return seriesGreen;
     }
 
-    public XYChart.Series getSeriesBlue() {
+    public XYChart.Series<K, V> getSeriesBlue() {
         return seriesBlue;
     }
 }
