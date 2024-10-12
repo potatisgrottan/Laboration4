@@ -21,7 +21,7 @@ import java.net.URL;
 
 public class Main extends Application {
     private MenuBar menubar;
-
+    private int colorFilterSwitch = 0;
     public static void main(String[] args) {
         launch(args);
     }
@@ -48,7 +48,7 @@ public class Main extends Application {
         Image image = new Image(resource.toString());
         //invertera bild
         WritableImage wImage = new WritableImage((int)image.getWidth(),(int)image.getHeight());
-        ImageInvertColor invert = new ImageInvertColor(image,wImage);
+
 
 
         // Skapar en ImageView för att visa bilden
@@ -65,6 +65,7 @@ public class Main extends Application {
         final LineChart<String, Number> chartHistogram = new LineChart<>(xAxis, yAxis);
         chartHistogram.setCreateSymbols(false);
 
+
         updateButton.setOnAction(_ -> {
             firstView.setImage(wImage);
             imageView.setImage(image);
@@ -80,6 +81,14 @@ public class Main extends Application {
                         imageHistogram.getSeriesGreen(),
                         imageHistogram.getSeriesBlue()
                 );
+            }
+
+            if(colorFilterSwitch==0){
+                ImageInvertColor invert = new ImageInvertColor(image,wImage);
+                colorFilterSwitch++;
+            }
+            else{
+                ImageGrayScale grayScale=new ImageGrayScale(image,wImage);
             }
         });
 

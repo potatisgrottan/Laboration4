@@ -30,8 +30,4 @@ public class ImageInvertColor {
         }
 
     }
-
-    public Image getImage() {
-        return wImage;
-    }
 }
