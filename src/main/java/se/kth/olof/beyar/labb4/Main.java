@@ -1,7 +1,6 @@
 package se.kth.olof.beyar.labb4;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
@@ -13,16 +12,18 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import se.kth.olof.beyar.labb4.controller.MenuController;
 import se.kth.olof.beyar.labb4.model.*;
+import se.kth.olof.beyar.labb4.view.MenuView;
 
 import java.net.URL;
 
 public class Main extends Application {
-    private MenuBar menubar;
 
     private int colorFilterSwitch = 0;
     private int[][]ogPicture;
     private WritableImage wImage;
+    private MenuController menuController;
 
     public static void main(String[] args) {
         launch(args);
@@ -41,8 +42,9 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         // Skapar menubar instans temporärt tills vi har egna modeller
-        createMenuBar();
-        MenuBar menuBar = getMenubar();
+        MenuModel menuModel = new MenuModel();
+        MenuView menuView = new MenuView();
+        menuController = new MenuController(menuModel, menuView);
 
         // Laddar exempelbilden från resursmappen
         URL resource = this.getClass().getResource("/images/shrek.png");
@@ -81,25 +83,33 @@ public class Main extends Application {
                         imageHistogram.getSeriesBlue()
                 );
             }
-            if(colorFilterSwitch==0){
-                ogPicture = MatrixImageConverter.imageToIntMatrix(image);
-                ImageInvertColor invert = new ImageInvertColor();
-                ogPicture = invert.processImage(ogPicture);
-                wImage = MatrixImageConverter.intMatrixToImage(ogPicture);
-                colorFilterSwitch++;
+
+            if (colorFilterSwitch == 0)
+            {
+                new ImageColor(image, wImage);
             }
-            else{
+            else if(colorFilterSwitch == 1)
+            {
                 ogPicture = MatrixImageConverter.imageToIntMatrix(image);
                 ImageGrayScale gray = new ImageGrayScale();
                 ogPicture = gray.processImage(ogPicture);
                 wImage = MatrixImageConverter.intMatrixToImage(ogPicture);
-                colorFilterSwitch=0;
-
             }
+            else if (colorFilterSwitch == 2)
+            {
+                ogPicture = MatrixImageConverter.imageToIntMatrix(image);
+                ImageInvertColor invert = new ImageInvertColor();
+                ogPicture = invert.processImage(ogPicture);
+                wImage = MatrixImageConverter.intMatrixToImage(ogPicture);
+            }
+
+            colorFilterSwitch++;
+            System.out.println("Vi är: " + colorFilterSwitch);
         });
 
+
         // Kör update första gången den renderas så man ser histogrammet
-        //updateButton.fire();
+        updateButton.fire();
 
         // Skapa en grön ram runt den histogrammet
         BorderStroke borderStroke = new BorderStroke(
@@ -129,7 +139,7 @@ public class Main extends Application {
 
         // Skapar en vertikal split
         VBox vbox = new VBox();
-        vbox.getChildren().add(menuBar);
+        vbox.getChildren().add(menuController.getMenuBar());
         vbox.getChildren().add(hbox);
         vbox.getChildren().add(updateButtonBox);
         vbox.getChildren().add(textPane);
@@ -145,25 +155,5 @@ public class Main extends Application {
         stage.setResizable(true);
         stage.setTitle("Image Processing");
         stage.show();
-    }
-
-
-    private void createMenuBar()
-    {
-        Menu fileMenu = new Menu("File");
-        MenuItem openFileOption = new MenuItem("Open");
-        fileMenu.getItems().add(openFileOption);
-        openFileOption.addEventHandler(ActionEvent.ACTION, _ -> System.out.println("Open file clicked!"));
-
-        Menu generateMenu = new Menu("Generate");
-        generateMenu.addEventHandler(ActionEvent.ACTION, _ -> System.out.println("Generate button clicked!"));
-
-        menubar = new MenuBar();
-        menubar.getMenus().addAll(fileMenu, generateMenu);
-    }
-
-    private MenuBar getMenubar()
-    {
-        return menubar;
     }
 }
