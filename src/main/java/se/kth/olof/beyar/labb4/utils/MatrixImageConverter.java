@@ -1,4 +1,4 @@
-package se.kth.olof.beyar.labb4;
+package se.kth.olof.beyar.labb4.utils;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;

@@ -14,6 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import se.kth.olof.beyar.labb4.controller.MenuController;
 import se.kth.olof.beyar.labb4.model.*;
+import se.kth.olof.beyar.labb4.utils.MatrixImageConverter;
 import se.kth.olof.beyar.labb4.view.MenuView;
 
 import java.net.URL;
@@ -23,7 +24,6 @@ public class Main extends Application {
     private int colorFilterSwitch = 0;
     private int[][]ogPicture;
     private WritableImage wImage;
-    private MenuController menuController;
 
     public static void main(String[] args) {
         launch(args);
@@ -44,7 +44,7 @@ public class Main extends Application {
         // Skapar menubar instans temporärt tills vi har egna modeller
         MenuModel menuModel = new MenuModel();
         MenuView menuView = new MenuView();
-        menuController = new MenuController(menuModel, menuView);
+        MenuController menuController = new MenuController(menuModel, menuView);
 
         // Laddar exempelbilden från resursmappen
         URL resource = this.getClass().getResource("/images/shrek.png");
