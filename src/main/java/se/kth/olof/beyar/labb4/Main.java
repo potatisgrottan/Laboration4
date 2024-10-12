@@ -10,11 +10,12 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import se.kth.olof.beyar.labb4.model.ImageHistogram;
+import se.kth.olof.beyar.labb4.model.*;
 
 import java.net.URL;
 
@@ -42,9 +43,13 @@ public class Main extends Application {
         MenuBar menuBar = getMenubar();
 
         // Laddar exempelbilden från resursmappen
-        URL resource = this.getClass().getResource("/images/skull_ct.png");
+        URL resource = this.getClass().getResource("/images/shrek.png");
         assert resource != null;
         Image image = new Image(resource.toString());
+        //invertera bild
+        WritableImage wImage = new WritableImage((int)image.getWidth(),(int)image.getHeight());
+        ImageInvertColor invert = new ImageInvertColor(image,wImage);
+
 
         // Skapar en ImageView för att visa bilden
         ImageView firstView = new ImageView();
@@ -61,6 +66,7 @@ public class Main extends Application {
         chartHistogram.setCreateSymbols(false);
 
         updateButton.setOnAction(_ -> {
+            firstView.setImage(wImage);
             imageView.setImage(image);
             chartHistogram.getData().clear();
 
@@ -78,7 +84,7 @@ public class Main extends Application {
         });
 
         // Kör update första gången den renderas så man ser histogrammet
-        updateButton.fire();
+        //updateButton.fire();
 
         // Skapa en grön ram runt den histogrammet
         BorderStroke borderStroke = new BorderStroke(
