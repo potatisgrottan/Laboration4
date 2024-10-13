@@ -24,7 +24,7 @@ public class ImageController {
         return view.createImagePreview(image);
     }
 
-    public void updateImage(Image newImage) {
+    public void setImage(Image newImage) {
         model.setImage(newImage);
     }
 
@@ -47,10 +47,5 @@ public class ImageController {
         hbox.getChildren().add(imageViewer);
 
         return hbox;
-    }
-
-    public void setImageView(ImageView newImageView)
-    {
-        model.setImageView(newImageView);
     }
 }

@@ -7,21 +7,12 @@ import javafx.scene.image.ImageView;
 public class ImageModel {
 
     private Image image;
-    private ImageView imageView;
     private int colorFilterSwitch;
 
     public ImageModel() {
         // Ta bort hårdkodningen
         setImageFromPath("/images/skull_ct.png");
         this.colorFilterSwitch = 0;
-    }
-
-    public ImageView getImageView() {
-        return imageView;
-    }
-
-    public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
     }
 
     public void setImageFromPath(String path) {

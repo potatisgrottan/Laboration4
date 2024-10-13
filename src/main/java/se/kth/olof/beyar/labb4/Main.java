@@ -28,17 +28,17 @@ public class Main extends Application {
             stage
         );
 
-        // Vi kan få tag i nuvarande valda bilden genom följande
-        // menuController.getChosenImageViewFromMenu();
-
         ImageModel imageModel = new ImageModel();
         ImagePreview imageView = new ImagePreview();
         ImageController imageController = new ImageController(
             imageModel,
             imageView
         );
-        imageController.setImageView(menuController.getChosenImageViewFromMenu());
         HBox manipulateImageField = imageController.displayControlAndImage();
+
+        // Genom att anropa följande så kommer den plocka den nya valde bilden vi har valt i
+        // fileChoosser och skicka till image modellen
+        imageController.setImage(menuController.getChosenImageViewFromMenu().getImage());
 
         StatusModel statusModel = new StatusModel();
         StatusView statusView = new StatusView();
