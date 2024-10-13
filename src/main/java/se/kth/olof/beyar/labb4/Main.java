@@ -37,8 +37,10 @@ public class Main extends Application {
         HBox manipulateImageField = imageController.displayControlAndImage();
 
         // Genom att anropa följande så kommer den plocka den nya valde bilden vi har valt i
-        // fileChoosser och skicka till image modellen
-        imageController.setImage(menuController.getChosenImageViewFromMenu().getImage());
+        // fileChoosser och skicka till image modellen. Däremot om man inte har valt någon fil
+        // och denna rad körs endå så kommer ImageModel.setImage ta emot null vilket kan krascha eller ge exception.
+        //
+        // imageController.setImage(menuController.getChosenImageViewFromMenu().getImage());
 
         StatusModel statusModel = new StatusModel();
         StatusView statusView = new StatusView();
