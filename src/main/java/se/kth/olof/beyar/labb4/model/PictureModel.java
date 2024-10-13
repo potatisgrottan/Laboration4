@@ -2,14 +2,14 @@ package se.kth.olof.beyar.labb4.model;
 
 import java.net.URL;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
-public class ImageModel {
+public class PictureModel
+{
 
     private Image image;
     private int colorFilterSwitch;
 
-    public ImageModel() {
+    public PictureModel() {
         // Ta bort hårdkodningen
         setImageFromPath("/images/skull_ct.png");
         this.colorFilterSwitch = 0;

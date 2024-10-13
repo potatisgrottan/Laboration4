@@ -4,11 +4,11 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import se.kth.olof.beyar.labb4.controller.ImageController;
+import se.kth.olof.beyar.labb4.controller.PictureController;
 import se.kth.olof.beyar.labb4.controller.MenuController;
 import se.kth.olof.beyar.labb4.controller.StatusController;
 import se.kth.olof.beyar.labb4.model.*;
-import se.kth.olof.beyar.labb4.view.ImagePreview;
+import se.kth.olof.beyar.labb4.view.PictureView;
 import se.kth.olof.beyar.labb4.view.MenuView;
 import se.kth.olof.beyar.labb4.view.StatusView;
 
@@ -28,9 +28,9 @@ public class Main extends Application {
             stage
         );
 
-        ImageModel imageModel = new ImageModel();
-        ImagePreview imageView = new ImagePreview();
-        ImageController imageController = new ImageController(
+        PictureModel imageModel = new PictureModel();
+        PictureView imageView = new PictureView();
+        PictureController imageController = new PictureController(
             imageModel,
             imageView
         );

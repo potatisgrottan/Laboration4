@@ -6,15 +6,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import se.kth.olof.beyar.labb4.model.ImageModel;
-import se.kth.olof.beyar.labb4.view.ImagePreview;
+import se.kth.olof.beyar.labb4.model.PictureModel;
+import se.kth.olof.beyar.labb4.view.PictureView;
 
-public class ImageController {
+public class PictureController
+{
 
-    private ImageModel model;
-    private ImagePreview view;
+    private PictureModel model;
+    private PictureView view;
 
-    public ImageController(ImageModel model, ImagePreview view) {
+    public PictureController(PictureModel model, PictureView view) {
         this.model = model;
         this.view = view;
     }

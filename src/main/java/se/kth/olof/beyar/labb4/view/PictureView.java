@@ -6,12 +6,12 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.FlowPane;
 import se.kth.olof.beyar.labb4.utils.MatrixImageConverter;
 
-public class ImagePreview
+public class PictureView
 {
     private WritableImage wImage;
     private int[][] ogPicture;
 
-    public ImagePreview() {}
+    public PictureView() {}
 
     public ImageView createImagePreview(Image image)
     {
