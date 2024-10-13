@@ -1,7 +1,6 @@
 package se.kth.olof.beyar.labb4;
 
 import javafx.application.Application;
-import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
@@ -12,7 +11,6 @@ import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import se.kth.olof.beyar.labb4.controller.MenuController;
 import se.kth.olof.beyar.labb4.model.*;
@@ -22,7 +20,6 @@ import se.kth.olof.beyar.labb4.view.MenuView;
 import java.net.URL;
 
 public class Main extends Application {
-
     private int colorFilterSwitch = 0;
     private int[][]ogPicture;
     private WritableImage wImage;
@@ -46,7 +43,7 @@ public class Main extends Application {
         // Skapar menubar instans temporärt tills vi har egna modeller
         MenuModel menuModel = new MenuModel();
         MenuView menuView = new MenuView();
-        MenuController menuController = new MenuController(menuModel, menuView);
+        MenuController menuController = new MenuController(menuModel, menuView, stage);
 
         // Laddar exempelbilden från resursmappen
         URL resource = this.getClass().getResource("/images/skull_ct.png");

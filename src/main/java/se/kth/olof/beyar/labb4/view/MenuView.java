@@ -13,7 +13,7 @@ public class MenuView {
 
     private void createMenuBar() {
         Menu fileMenu = new Menu("File");
-        MenuItem openFileOption = new MenuItem("Open");
+        MenuItem openFileOption = new MenuItem("Load image");
         fileMenu.getItems().add(openFileOption);
 
         Menu generateMenu = new Menu("Generate");
