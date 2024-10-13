@@ -9,27 +9,23 @@ import javafx.scene.layout.Priority;
 import se.kth.olof.beyar.labb4.model.ImageModel;
 import se.kth.olof.beyar.labb4.view.ImagePreview;
 
-public class ImageController
-{
+public class ImageController {
+
     private ImageModel model;
     private ImagePreview view;
-    private ImageView imageView;
 
     public ImageController(ImageModel model, ImagePreview view) {
         this.model = model;
         this.view = view;
-        this.imageView = new ImageView();
     }
 
     public ImageView displayImagePreview() {
         Image image = model.getImage();
-        imageView = view.createImagePreview(image);
-        return imageView;
+        return view.createImagePreview(image);
     }
 
     public void updateImage(Image newImage) {
         model.setImage(newImage);
-        imageView.setImage(newImage);
     }
 
     public FlowPane displayHistogram() {
@@ -38,8 +34,7 @@ public class ImageController
         return view.createHistogram(image, colorFilterSwitch);
     }
 
-    public HBox displayControlAndImage()
-    {
+    public HBox displayControlAndImage() {
         FlowPane histogramViewer = displayHistogram();
         ImageView imageViewer = displayImagePreview();
 
@@ -52,5 +47,10 @@ public class ImageController
         hbox.getChildren().add(imageViewer);
 
         return hbox;
+    }
+
+    public void setImageView(ImageView newImageView)
+    {
+        model.setImageView(newImageView);
     }
 }
