@@ -1,6 +1,7 @@
 package se.kth.olof.beyar.labb4;
 
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
@@ -11,6 +12,7 @@ import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import se.kth.olof.beyar.labb4.controller.MenuController;
 import se.kth.olof.beyar.labb4.model.*;
@@ -58,6 +60,9 @@ public class Main extends Application {
         firstView.setImage(image);
         FlowPane imageViewer = new FlowPane();
         imageViewer.getChildren().add(firstView);
+        // Från PropertyBindingExample.java
+        firstView.fitWidthProperty().bind(imageViewer.widthProperty());
+        firstView.fitHeightProperty().bind(imageViewer.heightProperty());
 
         // Histogram, code from https://java-buddy.blogspot.com/2015/07/display-images-histogram-on-javafx.html
         Button updateButton = new Button("Update");
@@ -136,7 +141,7 @@ public class Main extends Application {
         HBox hbox = new HBox();
         hbox.setPadding(new Insets(10));
         hbox.setSpacing(10);
-        hbox.setFillHeight(true);
+        HBox.setHgrow(imageViewer, Priority.ALWAYS);
         hbox.getChildren().add(histogramViewer);
         hbox.getChildren().add(imageViewer);
 
@@ -147,7 +152,7 @@ public class Main extends Application {
 
         // Skapar en vertikal split
         VBox vbox = new VBox();
-        vbox.setFillWidth(true);
+        VBox.setVgrow(hbox, Priority.ALWAYS);
         vbox.getChildren().add(menuController.getMenuBar());
         vbox.getChildren().add(hbox);
         vbox.getChildren().add(textPane);
