@@ -13,6 +13,7 @@ import se.kth.olof.beyar.labb4.view.MenuView;
 import se.kth.olof.beyar.labb4.view.StatusView;
 
 public class Main extends Application {
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -21,17 +22,29 @@ public class Main extends Application {
     public void start(Stage stage) {
         MenuModel menuModel = new MenuModel();
         MenuView menuView = new MenuView();
-        MenuController menuController = new MenuController(menuModel, menuView, stage);
-        menuController.getImageView();
+        MenuController menuController = new MenuController(
+            menuModel,
+            menuView,
+            stage
+        );
+
+        // Få tag i nuvarande valde bilden:
+        // menuController.getImageView();
 
         ImageModel imageModel = new ImageModel();
         ImagePreview imageView = new ImagePreview();
-        ImageController imageController = new ImageController(imageModel, imageView);
+        ImageController imageController = new ImageController(
+            imageModel,
+            imageView
+        );
         HBox manipulateImageField = imageController.displayControlAndImage();
 
         StatusModel statusModel = new StatusModel();
         StatusView statusView = new StatusView();
-        StatusController statusController = new StatusController(statusModel, statusView);
+        StatusController statusController = new StatusController(
+            statusModel,
+            statusView
+        );
         statusController.setStatusMsg("Histogram generated");
 
         // Skapar en vertikal uppdelning
