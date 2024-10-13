@@ -50,16 +50,16 @@ public class Main extends Application {
         URL resource = this.getClass().getResource("/images/skull_ct.png");
         assert resource != null;
         Image image = new Image(resource.toString());
+
+        // Skapar en ImageView för att visa bilden
         ogPicture = MatrixImageConverter.imageToIntMatrix(image);
         wImage = MatrixImageConverter.intMatrixToImage(ogPicture);
-        // Skapar en ImageView för att visa bilden
         ImageView firstView = new ImageView();
         firstView.setImage(image);
         FlowPane imageViewer = new FlowPane();
         imageViewer.getChildren().add(firstView);
 
-        // Histogram
-        // Code from https://java-buddy.blogspot.com/2015/07/display-images-histogram-on-javafx.html
+        // Histogram, code from https://java-buddy.blogspot.com/2015/07/display-images-histogram-on-javafx.html
         Button updateButton = new Button("Update");
         ImageView imageView = new ImageView();
         final CategoryAxis xAxis = new CategoryAxis();
@@ -136,21 +136,23 @@ public class Main extends Application {
         HBox hbox = new HBox();
         hbox.setPadding(new Insets(10));
         hbox.setSpacing(10);
+        hbox.setFillHeight(true);
         hbox.getChildren().add(histogramViewer);
         hbox.getChildren().add(imageViewer);
 
         // Ny text område längst ner
         FlowPane textPane = new FlowPane();
-        textPane.setPadding(new Insets(25));
+        textPane.setPadding(new Insets(15));
         textPane.getChildren().add(new Text("Histogram generated."));
 
         // Skapar en vertikal split
         VBox vbox = new VBox();
+        vbox.setFillWidth(true);
         vbox.getChildren().add(menuController.getMenuBar());
         vbox.getChildren().add(hbox);
         vbox.getChildren().add(textPane);
 
-        // Skapar en stackpane som vi kan lagra komponenterna på
+        // Skapar en stackpane som vi kan lagra komponenterna ovanpå
         StackPane root = new StackPane();
         root.getChildren().add(vbox);
 
