@@ -28,8 +28,8 @@ public class Main extends Application {
             stage
         );
 
-        // Få tag i nuvarande valde bilden:
-        // menuController.getImageView();
+        // Vi kan få tag i nuvarande valda bilden genom följande
+        // menuController.getChosenImageViewFromMenu();
 
         ImageModel imageModel = new ImageModel();
         ImagePreview imageView = new ImagePreview();
@@ -37,6 +37,7 @@ public class Main extends Application {
             imageModel,
             imageView
         );
+        imageController.setImageView(menuController.getChosenImageViewFromMenu());
         HBox manipulateImageField = imageController.displayControlAndImage();
 
         StatusModel statusModel = new StatusModel();
