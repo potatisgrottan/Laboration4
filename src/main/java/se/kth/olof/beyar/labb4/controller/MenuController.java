@@ -7,45 +7,49 @@ import se.kth.olof.beyar.labb4.model.MenuModel;
 import se.kth.olof.beyar.labb4.view.MenuView;
 
 public class MenuController {
-	private MenuModel model;
-	private MenuView view;
-	private Stage stage;
 
-	public MenuController(MenuModel model, MenuView view, Stage stage) {
-			this.model = model;
-			this.view = view;
-			this.stage = stage;
-			initializeListeners();
-	}
+    private MenuModel model;
+    private MenuView view;
+    private Stage stage;
 
-	private void initializeListeners() {
-		view.getOpenFileOptionButton().setOnAction(_ -> handleOpenFile());
-		view.getHistogramViewButton().setOnAction(_ -> handleHistogramView());
-		view.getContrastSliderButton().setOnAction(_ -> handleConstrastSlider());
-	}
+    public MenuController(MenuModel model, MenuView view, Stage stage) {
+        this.model = model;
+        this.view = view;
+        this.stage = stage;
+        initializeListeners();
+    }
 
-	// Implementera logik för att öppna fil här
-	private void handleOpenFile() {
-		model.openAndReadFile(stage);
-		System.out.println("New image loaded!");
-	}
+    private void initializeListeners() {
+        view.getOpenFileOptionButton().setOnAction(_ -> handleOpenFile());
 
-	public ImageView getImageView()
-	{
-		return model.getImageView();
-	}
+        view
+            .getHistogramViewButton()
+            .setOnAction(_ -> handleHistogramMenuButton());
 
-	private void handleHistogramView()
-	{
-		System.out.println("Histogram button pressed!");
-	}
+        view
+            .getContrastSliderButton()
+            .setOnAction(_ -> handleConstrastSliderMenuButton());
+    }
 
-	// Implementera logik för generering här
-	private void handleConstrastSlider() {
-		System.out.println("Contrast slider option pressed!");
-	}
+    // Implementera logik för att öppna fil här
+    private void handleOpenFile() {
+        model.openAndReadFile(stage);
+        System.out.println("New image loaded!");
+    }
 
-	public MenuBar getMenuBar() {
-			return view.getMenuBar();
-	}
+    public ImageView getChosenImageViewFromMenu() {
+        return model.getChosenImageViewFromMenu();
+    }
+
+    private void handleHistogramMenuButton() {
+        System.out.println("Histogram button pressed!");
+    }
+
+    private void handleConstrastSliderMenuButton() {
+        System.out.println("Contrast slider option pressed!");
+    }
+
+    public MenuBar getMenuBar() {
+        return view.getMenuBar();
+    }
 }
