@@ -1,6 +1,7 @@
 package se.kth.olof.beyar.labb4;
 
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
@@ -11,6 +12,7 @@ import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import se.kth.olof.beyar.labb4.controller.MenuController;
 import se.kth.olof.beyar.labb4.model.*;
@@ -47,25 +49,28 @@ public class Main extends Application {
         MenuController menuController = new MenuController(menuModel, menuView);
 
         // Laddar exempelbilden från resursmappen
-        URL resource = this.getClass().getResource("/images/shrek.png");
+        URL resource = this.getClass().getResource("/images/skull_ct.png");
         assert resource != null;
         Image image = new Image(resource.toString());
+
+        // Skapar en ImageView för att visa bilden
         ogPicture = MatrixImageConverter.imageToIntMatrix(image);
         wImage = MatrixImageConverter.intMatrixToImage(ogPicture);
-        // Skapar en ImageView för att visa bilden
         ImageView firstView = new ImageView();
         firstView.setImage(image);
+        FlowPane imageViewer = new FlowPane();
+        imageViewer.getChildren().add(firstView);
+        // Från PropertyBindingExample.java
+        firstView.fitWidthProperty().bind(imageViewer.widthProperty());
+        firstView.fitHeightProperty().bind(imageViewer.heightProperty());
 
-        // Histogram
-        // Code from https://java-buddy.blogspot.com/2015/07/display-images-histogram-on-javafx.html
+        // Histogram, code from https://java-buddy.blogspot.com/2015/07/display-images-histogram-on-javafx.html
         Button updateButton = new Button("Update");
         ImageView imageView = new ImageView();
-
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
         final LineChart<String, Number> chartHistogram = new LineChart<>(xAxis, yAxis);
         chartHistogram.setCreateSymbols(false);
-
         updateButton.setOnAction(_ -> {
             firstView.setImage(wImage);
             imageView.setImage(image);
@@ -112,44 +117,51 @@ public class Main extends Application {
             else
                 colorFilterSwitch++;
         });
-
         // Kör update första gången den renderas så man ser histogrammet
         updateButton.fire();
 
-        // Skapa en grön ram runt den histogrammet
+        // Sätter en marginal mellan update knappen och botten av fönstret
+        FlowPane updateButtonBox = new FlowPane();
+        // v: top, v1: right, v2: bottom, v3: left
+        updateButtonBox.setPadding(new Insets(0, 0, 0, 20));
+        updateButtonBox.getChildren().add(updateButton);
+
+        FlowPane histogramViewer = new FlowPane();
+        histogramViewer.getChildren().add(chartHistogram);
+        histogramViewer.getChildren().add(updateButtonBox);
+
+        // Skapa en grön ram runt vänstra sidan av fönstret
         BorderStroke borderStroke = new BorderStroke(
                 Color.GREEN,
                 BorderStrokeStyle.SOLID,
                 CornerRadii.EMPTY,
-                new BorderWidths(1)
+                new BorderWidths(2)
         );
-
         Border border = new Border(borderStroke);
-        chartHistogram.setBorder(border);
-
-        FlowPane updateButtonBox = new FlowPane();
-        // v: top, v1: right, v2: bottom, v3: left
-        updateButtonBox.setPadding(new Insets(0, 0, 75, 10));
-        updateButtonBox.getChildren().add(updateButton);
+        histogramViewer.setBorder(border);
+        FlowPane.setMargin(histogramViewer, new Insets(15));
 
         // Skapar horizontell split mellan två vyer och lägger till komponenter
         HBox hbox = new HBox();
-        hbox.getChildren().add(chartHistogram);
-        hbox.getChildren().add(firstView);
+        hbox.setPadding(new Insets(10));
+        hbox.setSpacing(10);
+        HBox.setHgrow(imageViewer, Priority.ALWAYS);
+        hbox.getChildren().add(histogramViewer);
+        hbox.getChildren().add(imageViewer);
 
         // Ny text område längst ner
         FlowPane textPane = new FlowPane();
-        textPane.setPadding(new Insets(25));
+        textPane.setPadding(new Insets(15));
         textPane.getChildren().add(new Text("Histogram generated."));
 
         // Skapar en vertikal split
         VBox vbox = new VBox();
+        VBox.setVgrow(hbox, Priority.ALWAYS);
         vbox.getChildren().add(menuController.getMenuBar());
         vbox.getChildren().add(hbox);
-        vbox.getChildren().add(updateButtonBox);
         vbox.getChildren().add(textPane);
 
-        // Skapar en stackpane som vi kan lagra komponenterna på
+        // Skapar en stackpane som vi kan lagra komponenterna ovanpå
         StackPane root = new StackPane();
         root.getChildren().add(vbox);
 
