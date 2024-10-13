@@ -31,9 +31,18 @@ public class ImageContrast implements IProcessor {
                 int g = 0xff & (argb >> 8);
                 int b = 0xff & argb;
 
-                r = (r-min) * 255 / (max-min);
-                g = (g-min) * 255 / (max-min) ;
-                b = (b-min) * 255 / (max-min);
+                if(max-min == 0){
+                    r = (r-min) * 255;
+                    g = (g-min) * 255;
+                    b = (b-min) * 255;
+                }
+                else{
+                    r = (r-min) * 255 / (max-min);
+                    g = (g-min) * 255 / (max-min);
+                    b = (b-min) * 255 / (max-min);
+                }
+
+
 
                 int contrastArgb = (a<<24) | (r<<16) | (g<<8) | b;
                 processedImage[y][x]=contrastArgb;
