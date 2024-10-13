@@ -17,6 +17,10 @@ public class MenuView {
         fileMenu.getItems().add(openFileOption);
 
         Menu generateMenu = new Menu("Generate");
+        MenuItem histogramView = new MenuItem("Histogram");
+        MenuItem contrastSliderView = new MenuItem("Contrast slider");
+        generateMenu.getItems().add(histogramView);
+        generateMenu.getItems().add(contrastSliderView);
 
         menuBar = new MenuBar();
         menuBar.getMenus().addAll(fileMenu, generateMenu);
@@ -26,11 +30,15 @@ public class MenuView {
         return menuBar;
     }
 
-    public MenuItem getOpenFileOption() {
-        return ((Menu) menuBar.getMenus().get(0)).getItems().get(0);
+    public MenuItem getOpenFileOptionButton() {
+        return menuBar.getMenus().getFirst().getItems().getFirst();
     }
 
-    public Menu getGenerateMenu() {
-        return menuBar.getMenus().get(1);
+    public MenuItem getHistogramViewButton() {
+        return menuBar.getMenus().get(1).getItems().getFirst();
+    }
+
+    public MenuItem getContrastSliderButton() {
+        return menuBar.getMenus().get(1).getItems().get(1);
     }
 }
