@@ -93,7 +93,11 @@ public class Main extends Application {
             } else if (colorFilterSwitch == 2) {
                 ImageInvertColor invert = new ImageInvertColor();
                 ogPicture = invert.processImage(ogPicture);
-            } else {
+            } else if (colorFilterSwitch==3){
+                ImageContrast con = new ImageContrast(150,50);
+                ogPicture = con.processImage(ogPicture);
+
+            }else{
                 throw new IllegalStateException("We should not be able to increment to this level: " + colorFilterSwitch);
             }
 
@@ -103,7 +107,7 @@ public class Main extends Application {
             // Update the image view
             firstView.setImage(wImage);
 
-            if (colorFilterSwitch == 2)
+            if (colorFilterSwitch == 3)
                 colorFilterSwitch = 0;
             else
                 colorFilterSwitch++;
