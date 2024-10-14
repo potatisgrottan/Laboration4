@@ -12,23 +12,31 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import se.kth.olof.beyar.labb4.controller.AppController;
 import se.kth.olof.beyar.labb4.utils.ImageContrast;
 import se.kth.olof.beyar.labb4.utils.ImageGrayScale;
 import se.kth.olof.beyar.labb4.utils.ImageHistogram;
 import se.kth.olof.beyar.labb4.utils.ImageInvertColor;
 import se.kth.olof.beyar.labb4.utils.MatrixImageConverter;
 
+import java.text.DecimalFormat;
+import java.util.concurrent.atomic.AtomicReference;
+
 public class PictureView
 {
     private WritableImage wImage;
     private int[][] ogPicture;
 
-    private Slider window;
-    private Slider level;
+   /* private Slider windowSlider;
+    private Slider levelSlider;
     private Label windowLabel;
     private Label levelLabel;
+    private AppController app;
 
-    public PictureView() {}
+    */
+
+    public PictureView() {
+    }
 
     public ImageView createImagePreview(Image image)
     {
@@ -57,11 +65,13 @@ public class PictureView
         final LineChart<String, Number> chartHistogram = new LineChart<>(xAxis, yAxis);
         chartHistogram.setCreateSymbols(false);
 
+
         updateButton.setOnAction(_ -> {
             imageDisplay.setImage(wImage);
-            chartHistogram.getData().clear();
+
 
             if (imageHistogram.isSuccess()) {
+                chartHistogram.getData().clear();
                 chartHistogram.getData().addAll(
                         //imageHistogram.getSeriesAlpha(),
                         imageHistogram.getSeriesRed(),
@@ -72,7 +82,7 @@ public class PictureView
 
             ogPicture = MatrixImageConverter.imageToIntMatrix(image);
 
-            if (colorFilterSwitch == 0) {
+           /* if (colorFilterSwitch == 0) {
                 ogPicture = MatrixImageConverter.imageToIntMatrix(image);
             } else if (colorFilterSwitch == 1) {
                 ImageGrayScale gray = new ImageGrayScale();
@@ -87,7 +97,9 @@ public class PictureView
                 throw new IllegalStateException("We should not be able to increment to this level: " + colorFilterSwitch);
             }
 
-            assert (ogPicture != null);
+            */
+
+            //assert (ogPicture != null);
             wImage = MatrixImageConverter.intMatrixToImage(ogPicture);
 
             // Update the image view
@@ -122,21 +134,87 @@ public class PictureView
         return histogramViewer;
     }
 
-    public void buildContrastView(){
-        window = new Slider();
-        level = new Slider();
-        levelLabel = new Label("Level");
-        windowLabel = new Label("Window");
-        createSliders();
+    public FlowPane createContrast(){
+
+        Slider windowSlider = new Slider(0,255,127);
+        Slider levelSlider = new Slider(0,255,127);
+
+        windowSlider.setShowTickMarks(true);
+        windowSlider.setShowTickLabels(true);
+        windowSlider.setMajorTickUnit(60);
+
+        levelSlider.setShowTickMarks(true);
+        levelSlider.setShowTickLabels(true);
+        levelSlider.setMajorTickUnit(60);
+
+        windowSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> 
+                );
+
+        levelSlider.valueProperty().addListener((observableValue, oldValue, newValue) ->
+                );
+
+
+
+        FlowPane contrastViewer = new FlowPane();
+
+        return contrastViewer;
     }
 
-    private void createSliders(){
-        window.setMin(1);
-        window.setMax(255);
-        level.setMin(1);
-        level.setMax(255);
-        window.setValue(128);
-        level.setValue(128);
+
+
+
+    private void displayContrast(Image newImage){
+
+        AtomicReference<Double> windowValue = new AtomicReference<>(0.0);
+        AtomicReference<Double> levelValue = new AtomicReference<>(0.0);
+        DecimalFormat df = new DecimalFormat("#.00");
+
+        // sliders
+        windowSlider = new Slider(0, 255, 0);
+        windowSlider.setMajorTickUnit(60);
+        windowSlider.setShowTickMarks(true);
+        windowSlider.setShowTickLabels(true);
+        windowSlider.setPrefSize(300, 300);
+
+        levelSlider = new Slider(0, 1, 0);
+        levelSlider.setMajorTickUnit(0.1);
+        levelSlider.setShowTickMarks(true);
+        levelSlider.setShowTickLabels(true);
+        levelSlider.setPrefSize(300, 300);
+
+
+        // grid
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(1, 1, 3, 1));
+
+
+        // labels
+        Label windowLabel = new Label("Window: ");
+        Label levelLabel = new Label("Level: ");
+        Label windowLabel2 = new Label("Window: 0");
+        Label levelLabel2 = new Label("Level: 0");
+
+        gridPane.add(windowLabel, 1, 2);
+        gridPane.add(levelLabel, 1, 5);
+        gridPane.add(windowSlider, 1, 3);
+        gridPane.add(levelSlider, 1, 6);
+        gridPane.add(windowLabel2, 1, 20);
+        gridPane.add(levelLabel2, 10, 20);
+
+        windowSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            windowLabel2.setText("Window value: " + df.format(newValue));
+            windowValue.set(newValue.doubleValue());
+            //app.handleConstrastSliderMenuButton(newImage, windowValue.get(), levelValue.get());
+        });
+
+        levelSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            levelLabel2.setText("Level value: " + df.format(newValue));
+            levelValue.set(newValue.doubleValue());
+            //app.handleConstrastSliderMenuButton(newImage, windowValue.get(), levelValue.get());
+        });
+        //app.pModel.setImage(newImage);
     }
 
     public Label getWindowLabel(){
@@ -147,11 +225,13 @@ public class PictureView
         return levelLabel;
     }
 
-    public Slider getLevelSlider() {
+    /*public Slider getLevelSlider() {
         return level;
     }
 
     public Slider getWindowSlider() {
         return window;
     }
+
+     */
 }

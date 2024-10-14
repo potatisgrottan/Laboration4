@@ -2,7 +2,9 @@ package se.kth.olof.beyar.labb4.controller;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -15,6 +17,9 @@ import se.kth.olof.beyar.labb4.view.MenuView;
 import se.kth.olof.beyar.labb4.view.PictureView;
 import se.kth.olof.beyar.labb4.view.StatusView;
 
+import java.text.DecimalFormat;
+import java.util.concurrent.atomic.AtomicReference;
+
 public class AppController {
 
     private MenuModel mModel;
@@ -26,6 +31,8 @@ public class AppController {
 
     private StatusModel sModel;
     private StatusView sView;
+
+    private FlowPane histogramContrastSwitch;
 
     public AppController(MenuModel mModel,MenuView mView,Stage stage, PictureModel pModel,
                          PictureView pView, StatusModel sModel,StatusView sView)
@@ -46,16 +53,16 @@ public class AppController {
             reRenderApp();
         });
 
-        /*
+
         mView
                 .getHistogramViewButton()
                 .setOnAction(_ -> handleHistogramMenuButton());
 
         mView
                 .getContrastSliderButton()
-                .setOnAction(_ -> handleConstrastSliderMenuButton());
+                .setOnAction(_ -> handleConstrastSliderMenuButton(pModel.getImage()));
 
-         */
+
     }
 
     public MenuBar getMenuBar() {
@@ -70,6 +77,19 @@ public class AppController {
     private void handleOpenFile(){
         mModel.openAndReadFile(stage);
         pModel.setImage(mModel.getChosenImageViewFromMenu().getImage());
+    }
+
+    private void handleHistogramMenuButton() {
+        histogramContrastSwitch = displayHistogram();
+        displayControlAndImage();
+        System.out.println("Histogram button pressed!");
+    }
+
+    private void handleConstrastSliderMenuButton(Image image) {
+        histogramContrastSwitch = displayContrast();
+        displayControlAndImage();
+
+        System.out.println("Contrast slider option pressed!");
     }
 
     public ImageView displayImagePreview() {
@@ -95,8 +115,13 @@ public class AppController {
         return pView.createHistogram(imageHistogram,image, colorFilterSwitch);
     }
 
+    public FlowPane displayContrast(){
+        Image image = pModel.getImage();
+
+        return pView.createContrast();
+    }
+
     public HBox displayControlAndImage() {
-        FlowPane histogramViewer = displayHistogram();
         ImageView imageViewer = displayImagePreview();
 
         // Skapar horizontell split mellan två vyer och lägger till komponenter
@@ -104,11 +129,13 @@ public class AppController {
         hbox.setPadding(new Insets(10));
         hbox.setSpacing(10);
         HBox.setHgrow(imageViewer, Priority.ALWAYS);
-        hbox.getChildren().add(histogramViewer);
+        hbox.getChildren().add(histogramContrastSwitch);
         hbox.getChildren().add(imageViewer);
 
         return hbox;
     }
+
+
 
     public void reRenderApp(){
         HBox manipulateImageField = displayControlAndImage();

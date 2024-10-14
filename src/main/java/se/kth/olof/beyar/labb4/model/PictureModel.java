@@ -9,6 +9,7 @@ public class PictureModel
     private Image image;
     private int colorFilterSwitch;
 
+
     public PictureModel() {
         setImageFromPath("/images/skull_ct.png");
         this.colorFilterSwitch = 0;
@@ -33,6 +34,7 @@ public class PictureModel
     public int getColorFilterSwitch() {
         return colorFilterSwitch;
     }
+
 
     public void incrementColorFilterSwitch() {
         if (colorFilterSwitch == 3) colorFilterSwitch = 0;
