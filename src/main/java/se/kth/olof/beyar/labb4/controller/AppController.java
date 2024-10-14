@@ -123,7 +123,7 @@ public class AppController {
     public FlowPane displayContrast(){
         Image image = pModel.getImage();
 
-        return pView.createContrast();
+        return pView.createContrast(image);
     }
 
     public HBox displayControlAndImage() {

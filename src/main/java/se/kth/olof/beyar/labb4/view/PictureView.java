@@ -26,7 +26,7 @@ public class PictureView
 {
     private WritableImage wImage;
     private int[][] ogPicture;
-
+    private ImageContrast contrast;
    /* private Slider windowSlider;
     private Slider levelSlider;
     private Label windowLabel;
@@ -134,12 +134,10 @@ public class PictureView
         return histogramViewer;
     }
 
-    public FlowPane createContrast(){
-
+    public FlowPane createContrast(Image image){
         Slider windowSlider = new Slider(0,255,127);
         Slider levelSlider = new Slider(0,255,127);
-        Label windonwLabel = new Label("Window");
-        Label levelLabel = new Label("Level");
+
         windowSlider.setShowTickMarks(true);
         windowSlider.setShowTickLabels(true);
         windowSlider.setMajorTickUnit(55);
@@ -150,18 +148,18 @@ public class PictureView
         levelSlider.setMajorTickUnit(55);
         levelSlider.setPrefSize(350, 50);
 
-        /*windowSlider.valueProperty().addListener((observableValue, oldValue, newValue) ->
+        ogPicture = MatrixImageConverter.imageToIntMatrix(image);
 
-        );
+        windowSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+                    contrast = new ImageContrast((int) windowSlider.getValue(), (int) levelSlider.getValue());
+                    ogPicture = contrast.processImage(ogPicture);
+                    wImage = MatrixImageConverter.intMatrixToImage(ogPicture);
+                });
 
-        levelSlider.valueProperty().addListener((observableValue, oldValue, newValue) ->
+       /* levelSlider.valueProperty().addListener((observableValue, oldValue, newValue) ->
 
-                );
-
-         */
-
-
-
+                );*/
+        createImagePreview(wImage);
         FlowPane contrastViewer = new FlowPane();
         contrastViewer.getChildren().addAll(windowSlider, levelSlider);
         return contrastViewer;
