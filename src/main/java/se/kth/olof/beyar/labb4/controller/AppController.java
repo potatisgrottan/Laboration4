@@ -7,12 +7,13 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import se.kth.olof.beyar.labb4.model.MenuModel;
 import se.kth.olof.beyar.labb4.model.PictureModel;
 import se.kth.olof.beyar.labb4.model.StatusModel;
-import se.kth.olof.beyar.labb4.utils.ImageHistogram;
+import se.kth.olof.beyar.labb4.utils.*;
 import se.kth.olof.beyar.labb4.view.MenuView;
 import se.kth.olof.beyar.labb4.view.PictureView;
 import se.kth.olof.beyar.labb4.view.StatusView;
@@ -31,6 +32,12 @@ public class AppController {
 
     private StatusModel sModel;
     private StatusView sView;
+
+    private ImageContrast contrast;
+    private ImageGrayScale gray;
+    private ImageInvertColor invert;
+
+    private WritableImage wImage;
 
     private int histogramContrastSwitch;
 
@@ -63,6 +70,11 @@ public class AppController {
         );
 
 
+       /* levelSlider.valueProperty().addListener((observableValue, oldValue, newValue) ->
+
+                );*/
+
+
     }
 
     public MenuBar getMenuBar() {
@@ -90,7 +102,18 @@ public class AppController {
         histogramContrastSwitch = 0;
         displayControlAndImage();
         reRenderApp();
+
         System.out.println("Contrast slider option pressed!");
+    }
+
+    public void handlecontrast(){
+        contrast = new ImageContrast((int) pView.getWindowSlider().getValue(),
+                (int) pView.getLevelSlider().getValue());
+        int [][] ogPicture = pView.getOgPicture();
+        ogPicture = contrast.processImage(ogPicture);
+        wImage = MatrixImageConverter.intMatrixToImage(ogPicture);
+        pView.createImagePreview(wImage);
+        reRenderApp();
     }
 
     public ImageView displayImagePreview() {

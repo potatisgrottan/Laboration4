@@ -26,14 +26,10 @@ public class PictureView
 {
     private WritableImage wImage;
     private int[][] ogPicture;
-    private ImageContrast contrast;
-   /* private Slider windowSlider;
+    private Slider windowSlider;
     private Slider levelSlider;
-    private Label windowLabel;
-    private Label levelLabel;
-    private AppController app;
+    private ImageContrast contrast;
 
-    */
 
     public PictureView() {
     }
@@ -135,8 +131,8 @@ public class PictureView
     }
 
     public FlowPane createContrast(Image image){
-        Slider windowSlider = new Slider(0,255,127);
-        Slider levelSlider = new Slider(0,255,127);
+        windowSlider = new Slider(0,255,127);
+        levelSlider = new Slider(0,255,127);
 
         windowSlider.setShowTickMarks(true);
         windowSlider.setShowTickLabels(true);
@@ -149,96 +145,41 @@ public class PictureView
         levelSlider.setPrefSize(350, 50);
 
         ogPicture = MatrixImageConverter.imageToIntMatrix(image);
-
         windowSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-                    contrast = new ImageContrast((int) windowSlider.getValue(), (int) levelSlider.getValue());
-                    ogPicture = contrast.processImage(ogPicture);
-                    wImage = MatrixImageConverter.intMatrixToImage(ogPicture);
-                });
+            //System.out.println(observableValue + " " + oldValue + " " + newValue);
+            handlecontrast();
 
-       /* levelSlider.valueProperty().addListener((observableValue, oldValue, newValue) ->
+        });
 
-                );*/
-        createImagePreview(wImage);
+        levelSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            //System.out.println(observableValue + " " + oldValue + " " + newValue);
+            handlecontrast();
+
+        });
+
         FlowPane contrastViewer = new FlowPane();
         contrastViewer.getChildren().addAll(windowSlider, levelSlider);
         return contrastViewer;
     }
 
-
-
-/*
-    private void displayContrast(Image newImage){
-
-        AtomicReference<Double> windowValue = new AtomicReference<>(0.0);
-        AtomicReference<Double> levelValue = new AtomicReference<>(0.0);
-        DecimalFormat df = new DecimalFormat("#.00");
-
-        // sliders
-        windowSlider = new Slider(0, 255, 0);
-        windowSlider.setMajorTickUnit(60);
-        windowSlider.setShowTickMarks(true);
-        windowSlider.setShowTickLabels(true);
-        windowSlider.setPrefSize(300, 300);
-
-        levelSlider = new Slider(0, 1, 0);
-        levelSlider.setMajorTickUnit(0.1);
-        levelSlider.setShowTickMarks(true);
-        levelSlider.setShowTickLabels(true);
-        levelSlider.setPrefSize(300, 300);
-
-
-        // grid
-        GridPane gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(1, 1, 3, 1));
-
-
-        // labels
-        Label windowLabel = new Label("Window: ");
-        Label levelLabel = new Label("Level: ");
-        Label windowLabel2 = new Label("Window: 0");
-        Label levelLabel2 = new Label("Level: 0");
-
-        gridPane.add(windowLabel, 1, 2);
-        gridPane.add(levelLabel, 1, 5);
-        gridPane.add(windowSlider, 1, 3);
-        gridPane.add(levelSlider, 1, 6);
-        gridPane.add(windowLabel2, 1, 20);
-        gridPane.add(levelLabel2, 10, 20);
-
-        windowSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            windowLabel2.setText("Window value: " + df.format(newValue));
-            windowValue.set(newValue.doubleValue());
-            //app.handleConstrastSliderMenuButton(newImage, windowValue.get(), levelValue.get());
-        });
-
-        levelSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            levelLabel2.setText("Level value: " + df.format(newValue));
-            levelValue.set(newValue.doubleValue());
-            //app.handleConstrastSliderMenuButton(newImage, windowValue.get(), levelValue.get());
-        });
-        //app.pModel.setImage(newImage);
-    }
-
-
-
-    public Label getWindowLabel(){
-        return windowLabel;
-    }
-
-    public Label getLevelLabel() {
-        return levelLabel;
-    }
-
-    public Slider getLevelSlider() {
-        return level;
+    public void handlecontrast(){
+        contrast = new ImageContrast((int) getWindowSlider().getValue(),
+                (int) getLevelSlider().getValue());
+        System.out.println(getLevelSlider().getValue()+" "+getWindowSlider().getValue());
+        ogPicture = contrast.processImage(ogPicture);
+        wImage = MatrixImageConverter.intMatrixToImage(ogPicture);
+        createImagePreview(wImage);
     }
 
     public Slider getWindowSlider() {
-        return window;
+        return windowSlider;
     }
 
-     */
+    public Slider getLevelSlider() {
+        return levelSlider;
+    }
+
+    public int[][] getOgPicture() {
+        return ogPicture;
+    }
 }
