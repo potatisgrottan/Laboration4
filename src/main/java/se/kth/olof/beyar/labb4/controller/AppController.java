@@ -17,10 +17,10 @@ import se.kth.olof.beyar.labb4.view.PictureView;
 import se.kth.olof.beyar.labb4.view.StatusView;
 
 public class AppController {
+    private Stage stage;
 
     private MenuModel mModel;
     private MenuView mView;
-    private Stage stage;
 
     private PictureModel pModel;
     private PictureView pView;
@@ -55,7 +55,7 @@ public class AppController {
         );
 
         mView.getContrastSliderButton().setOnAction(_ ->
-                handleConstrastSliderMenuButton(pModel.getImage())
+                handleConstrastSliderMenuButton()
         );
 
         mView.getGrayScaleButton().setOnAction(_-> handleGrayScale());
@@ -88,7 +88,7 @@ public class AppController {
         System.out.println("Histogram button pressed!");
     }
 
-    private void handleConstrastSliderMenuButton(Image image) {
+    private void handleConstrastSliderMenuButton() {
         histogramContrastSwitch = 0;
         displayControlAndImage();
         reRenderApp();
@@ -99,12 +99,11 @@ public class AppController {
         int windowValue = pView.getWindowValue();
         int levelValue = pView.getLevelValue();
 
+        // System.out.println("Values { Window: " + windowValue + ", Level: " + levelValue + "}");
         ImageContrast contrast = new ImageContrast(windowValue, levelValue);
-        System.out.println("Values { Window: " + windowValue + ", Level: " + levelValue + "}");
 
         int[][] processedPicture = contrast.processImage(pView.getOgPicture());
         WritableImage wImage = MatrixImageConverter.intMatrixToImage(processedPicture);
-
         pModel.setImage(wImage);
         updateImageView(wImage);
     }
@@ -113,22 +112,27 @@ public class AppController {
         ImageGrayScale gray = new ImageGrayScale();
 
         int[][] processedPicture = gray.processImage(pView.getOgPicture());
-        pModel.setImage(MatrixImageConverter.intMatrixToImage(processedPicture));
-        updateImageView(pModel.getImage());
+        WritableImage wImage = MatrixImageConverter.intMatrixToImage(processedPicture);
+        pModel.setImage(wImage);
+        mModel.getChosenImageViewFromMenu().setImage(wImage);
+        reRenderApp();
     }
 
     private void handleInvertedColor(){
         ImageInvertColor invert = new ImageInvertColor();
+
         int[][] processedPicture = invert.processImage(pView.getOgPicture());
-        pModel.setImage(MatrixImageConverter.intMatrixToImage(processedPicture));
-        updateImageView(pModel.getImage());
+        WritableImage wImage = MatrixImageConverter.intMatrixToImage(processedPicture);
+        pModel.setImage(wImage);
+        mModel.getChosenImageViewFromMenu().setImage(wImage);
+        reRenderApp();
     }
 
     public ImageView displayImagePreview() {
         Image image;
 
         if (mModel.getChosenImageViewFromMenu().getImage() == null) {
-           image = pModel.getImage();
+            image = pModel.getImage();
         } else {
             image = mModel.getChosenImageViewFromMenu().getImage();
         }
@@ -142,15 +146,10 @@ public class AppController {
         return pView.createImagePreview(image);
     }
 
-    public void setImage(Image newImage) {
-        pModel.setImage(newImage);
-    }
-
     public FlowPane displayHistogram() {
         Image image = pModel.getImage();
-        int colorFilterSwitch = pModel.getColorFilterSwitch();
         ImageHistogram imageHistogram = new ImageHistogram(image);
-        return pView.createHistogram(imageHistogram,image, colorFilterSwitch);
+        return pView.createHistogram(imageHistogram, image);
     }
 
     public FlowPane displayContrast(){
@@ -180,8 +179,6 @@ public class AppController {
         return hbox;
     }
 
-
-
     private void updateImageView(Image newImage) {
         ImageView imageView = pView.getImageView();
         if (imageView != null) {
@@ -191,6 +188,7 @@ public class AppController {
 
     public void reRenderApp(){
         HBox manipulateImageField = displayControlAndImage();
+        updateImageView(pModel.getImage());
 
         VBox vbox = new VBox();
         VBox.setVgrow(manipulateImageField, Priority.ALWAYS);
