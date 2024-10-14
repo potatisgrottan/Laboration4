@@ -12,10 +12,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import se.kth.olof.beyar.labb4.model.ImageContrast;
-import se.kth.olof.beyar.labb4.model.ImageGrayScale;
-import se.kth.olof.beyar.labb4.model.ImageHistogram;
-import se.kth.olof.beyar.labb4.model.ImageInvertColor;
+import se.kth.olof.beyar.labb4.utils.ImageContrast;
+import se.kth.olof.beyar.labb4.utils.ImageGrayScale;
+import se.kth.olof.beyar.labb4.utils.ImageHistogram;
+import se.kth.olof.beyar.labb4.utils.ImageInvertColor;
 import se.kth.olof.beyar.labb4.utils.MatrixImageConverter;
 
 public class PictureView

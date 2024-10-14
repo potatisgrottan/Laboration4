@@ -17,4 +17,6 @@ module se.kth.olof.beyar.labb4 {
 
     exports se.kth.olof.beyar.labb4.controller;
     opens se.kth.olof.beyar.labb4.controller to javafx.fxml;
+    exports se.kth.olof.beyar.labb4.utils;
+    opens se.kth.olof.beyar.labb4.utils to javafx.fxml;
 }

@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import se.kth.olof.beyar.labb4.model.ImageHistogram;
+import se.kth.olof.beyar.labb4.utils.ImageHistogram;
 import se.kth.olof.beyar.labb4.model.PictureModel;
 import se.kth.olof.beyar.labb4.view.PictureView;
 

@@ -1,4 +1,4 @@
-package se.kth.olof.beyar.labb4.model;
+package se.kth.olof.beyar.labb4.utils;
 
 import javafx.scene.chart.XYChart;
 import javafx.scene.image.Image;

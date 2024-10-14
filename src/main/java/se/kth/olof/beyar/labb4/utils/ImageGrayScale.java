@@ -1,10 +1,10 @@
-package se.kth.olof.beyar.labb4.model;
+package se.kth.olof.beyar.labb4.utils;
 
 import se.kth.olof.beyar.labb4.controller.IProcessor;
 
-public class ImageInvertColor implements IProcessor {
+public class ImageGrayScale implements IProcessor {
 
-    public ImageInvertColor() {}
+    public ImageGrayScale() {}
 
     @Override
     public int[][] processImage(int[][] originalImage) {
@@ -22,12 +22,10 @@ public class ImageInvertColor implements IProcessor {
                 int g = 0xff & (argb >> 8);
                 int b = 0xff & argb;
 
-                r = 255-r;
-                g = 255-g;
-                b = 255-b;
+                r = g = b = (r+g+b)/3;
 
-                int invertedArgb = (a<<24) | (r<<16) | (g<<8) | b;
-                processedImage[y][x]=invertedArgb;
+                int grayScaleArgb = (a<<24) | (r<<16) | (g<<8) | b;
+                processedImage[y][x]=grayScaleArgb;
             }
         }
 

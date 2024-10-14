@@ -1,4 +1,4 @@
-package se.kth.olof.beyar.labb4.model;
+package se.kth.olof.beyar.labb4.utils;
 
 
 import se.kth.olof.beyar.labb4.controller.IProcessor;
@@ -21,7 +21,6 @@ public class ImageContrast implements IProcessor {
         int min = valueLevelSlider - valueWindowSlider/2;
         int max = valueLevelSlider + valueWindowSlider/2;
 
-
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int argb=originalImage[y][x];
@@ -41,8 +40,6 @@ public class ImageContrast implements IProcessor {
                     g = (g-min) * 255 / (max-min);
                     b = (b-min) * 255 / (max-min);
                 }
-
-
 
                 int contrastArgb = (a<<24) | (r<<16) | (g<<8) | b;
                 processedImage[y][x]=contrastArgb;
