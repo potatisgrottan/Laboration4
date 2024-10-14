@@ -22,8 +22,8 @@ public class MenuModel {
         fileChooser = new FileChooser();
 
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-            "jpg files",
-            "*.jpg"
+            "png files",
+            "*.png"
         );
 
         fileChooser.getExtensionFilters().add(extFilter);
