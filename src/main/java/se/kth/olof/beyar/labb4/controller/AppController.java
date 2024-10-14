@@ -78,7 +78,9 @@ public class AppController {
 
     private void handleOpenFile(){
         mModel.openAndReadFile(stage);
-        pModel.setImage(mModel.getChosenImageViewFromMenu().getImage());
+
+        if (mModel.isImageUploaded())
+            pModel.setImage(mModel.getChosenImageViewFromMenu().getImage());
     }
 
     private void handleHistogramMenuButton() {

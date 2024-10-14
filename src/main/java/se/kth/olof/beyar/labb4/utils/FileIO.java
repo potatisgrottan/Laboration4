@@ -32,11 +32,6 @@ public class FileIO
             imageView.fitWidthProperty().bind(stage.widthProperty());
             imageView.setPreserveRatio(true);
             imageView.setSmooth(true);
-
-            // exception handling needed?
-        } else {
-            // show an Alert
-            System.out.println("Something went wrong");
         }
 
         return imageView;
