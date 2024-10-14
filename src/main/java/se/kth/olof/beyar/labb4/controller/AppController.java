@@ -101,7 +101,11 @@ public class AppController {
         else{
             image = mModel.getChosenImageViewFromMenu().getImage();
         }
-        sModel.setStatusMsg("Histogram generated");
+        if(histogramContrastSwitch==1){
+            sModel.setStatusMsg("Histogram generated");
+        }else{
+            sModel.setStatusMsg("Sliders generated");
+        }
         return pView.createImagePreview(image);
     }
 

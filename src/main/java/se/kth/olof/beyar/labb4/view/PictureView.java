@@ -138,14 +138,17 @@ public class PictureView
 
         Slider windowSlider = new Slider(0,255,127);
         Slider levelSlider = new Slider(0,255,127);
-
+        Label windonwLabel = new Label("Window");
+        Label levelLabel = new Label("Level");
         windowSlider.setShowTickMarks(true);
         windowSlider.setShowTickLabels(true);
-        windowSlider.setMajorTickUnit(60);
+        windowSlider.setMajorTickUnit(55);
+        windowSlider.setPrefSize(350, 50);
 
         levelSlider.setShowTickMarks(true);
         levelSlider.setShowTickLabels(true);
-        levelSlider.setMajorTickUnit(60);
+        levelSlider.setMajorTickUnit(55);
+        levelSlider.setPrefSize(350, 50);
 
         /*windowSlider.valueProperty().addListener((observableValue, oldValue, newValue) ->
 
