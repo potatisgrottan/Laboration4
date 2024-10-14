@@ -16,7 +16,11 @@ public class MenuModel {
 
     public void openAndReadFile(Stage stage) {
         imageView = FileIO.openFile(stage);
-        if (imageView.getImage() != null) imageUploaded = true;
+
+        if (imageView.getImage() != null)
+            imageUploaded = true;
+        else
+            imageUploaded = false;
     }
 
     public ImageView getChosenImageViewFromMenu() {
