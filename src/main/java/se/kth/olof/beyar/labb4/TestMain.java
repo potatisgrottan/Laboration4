@@ -34,23 +34,6 @@ public class TestMain extends Application {
         AppController app = new AppController(menuModel,menuView,stage,
                 pictureModel,pictureView,statusModel,statusView);
 
-        HBox manipulateImageField = app.displayControlAndImage();
-
-        VBox vbox = new VBox();
-        VBox.setVgrow(manipulateImageField, Priority.ALWAYS);
-        vbox.getChildren().add(app.getMenuBar());
-        vbox.getChildren().add(manipulateImageField);
-        vbox.getChildren().add(app.buildStatusView());
-
-        StackPane root = new StackPane();
-        root.getChildren().add(vbox);
-
-        // Konfigurerar och visar fönstret
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.sizeToScene();
-        stage.setResizable(true);
-        stage.setTitle("Image Processing");
-        stage.show();
+        app.reRenderApp();
     }
 }

@@ -1,16 +1,16 @@
 package se.kth.olof.beyar.labb4.controller;
 
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import se.kth.olof.beyar.labb4.model.MenuModel;
 import se.kth.olof.beyar.labb4.model.PictureModel;
 import se.kth.olof.beyar.labb4.model.StatusModel;
+import se.kth.olof.beyar.labb4.utils.ImageHistogram;
 import se.kth.olof.beyar.labb4.view.MenuView;
 import se.kth.olof.beyar.labb4.view.PictureView;
 import se.kth.olof.beyar.labb4.view.StatusView;
@@ -41,7 +41,10 @@ public class AppController {
     }
 
     private void initializeListeners() {
-        mView.getOpenFileOptionButton().setOnAction(_ -> handleOpenFile());
+        mView.getOpenFileOptionButton().setOnAction(_ -> {
+            handleOpenFile();
+            reRenderApp();
+        });
 
         /*
         mView
@@ -70,7 +73,14 @@ public class AppController {
     }
 
     public ImageView displayImagePreview() {
-        Image image = pModel.getImage();
+        Image image;
+        if(mModel.getChosenImageViewFromMenu().getImage()==null){
+           image = pModel.getImage();
+        }
+        else{
+            image = mModel.getChosenImageViewFromMenu().getImage();
+        }
+        sModel.setStatusMsg("Histogram generated");
         return pView.createImagePreview(image);
     }
 
@@ -81,7 +91,8 @@ public class AppController {
     public FlowPane displayHistogram() {
         Image image = pModel.getImage();
         int colorFilterSwitch = pModel.getColorFilterSwitch();
-        return pView.createHistogram(image, colorFilterSwitch);
+        ImageHistogram imageHistogram = new ImageHistogram(image);
+        return pView.createHistogram(imageHistogram,image, colorFilterSwitch);
     }
 
     public HBox displayControlAndImage() {
@@ -97,5 +108,26 @@ public class AppController {
         hbox.getChildren().add(imageViewer);
 
         return hbox;
+    }
+
+    public void reRenderApp(){
+        HBox manipulateImageField = displayControlAndImage();
+
+        VBox vbox = new VBox();
+        VBox.setVgrow(manipulateImageField, Priority.ALWAYS);
+        vbox.getChildren().add(getMenuBar());
+        vbox.getChildren().add(manipulateImageField);
+        vbox.getChildren().add(buildStatusView());
+
+        StackPane root = new StackPane();
+        root.getChildren().add(vbox);
+
+        // Konfigurerar och visar fönstret
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.sizeToScene();
+        stage.setResizable(true);
+        stage.setTitle("Image Processing");
+        stage.show();
     }
 }
