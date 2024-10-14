@@ -49,22 +49,17 @@ public class AppController {
             reRenderApp();
         });
 
+        mView.getSaveOptionButton().setOnAction(_ -> handleSaveFile() );
 
-        mView.getHistogramViewButton().setOnAction(_ ->
-                handleHistogramMenuButton()
-        );
+        mView.getHistogramViewButton().setOnAction(_ -> handleHistogramMenuButton() );
 
-        mView.getContrastSliderButton().setOnAction(_ ->
-                handleConstrastSliderMenuButton()
-        );
+        mView.getContrastSliderButton().setOnAction(_ -> handleConstrastSliderMenuButton() );
 
         mView.getGrayScaleButton().setOnAction(_-> handleGrayScale());
 
         mView.getInvertedColorButton().setOnAction(_-> handleInvertedColor());
 
-        pView.setContrastChangeCallback(() -> {
-            handleContrast();
-        });
+        pView.setContrastChangeCallback(() -> handleContrast()) ;
     }
 
     public MenuBar getMenuBar() {
@@ -81,6 +76,10 @@ public class AppController {
 
         if (mModel.isImageUploaded())
             pModel.setImage(mModel.getChosenImageViewFromMenu().getImage());
+    }
+
+    private void handleSaveFile(){
+        mModel.saveFile(pModel.getImage());
     }
 
     private void handleHistogramMenuButton() {

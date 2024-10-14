@@ -1,5 +1,6 @@
 package se.kth.olof.beyar.labb4.model;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import se.kth.olof.beyar.labb4.utils.FileIO;
@@ -21,6 +22,10 @@ public class MenuModel {
             imageUploaded = true;
         else
             imageUploaded = false;
+    }
+
+    public void saveFile(Image image) {
+        FileIO.saveFile(image);
     }
 
     public ImageView getChosenImageViewFromMenu() {

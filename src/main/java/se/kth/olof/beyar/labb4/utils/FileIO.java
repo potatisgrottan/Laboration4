@@ -1,11 +1,15 @@
 package se.kth.olof.beyar.labb4.utils;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 public class FileIO
 {
@@ -35,5 +39,17 @@ public class FileIO
         }
 
         return imageView;
+    }
+
+    public static void saveFile(Image image)
+    {
+        BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+        try
+        {
+            ImageIO.write(bufferedImage, "png", new File("copy.png"));
+        } catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 }

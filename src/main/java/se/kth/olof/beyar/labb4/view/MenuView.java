@@ -14,7 +14,8 @@ public class MenuView {
     private void createMenuBar() {
         Menu fileMenu = new Menu("File");
         MenuItem openFileOption = new MenuItem("Load image");
-        fileMenu.getItems().add(openFileOption);
+        MenuItem saveImageOption = new MenuItem("Save image");
+        fileMenu.getItems().addAll(openFileOption, saveImageOption);
 
         Menu generateMenu = new Menu("Generate");
         MenuItem histogramView = new MenuItem("Histogram");
@@ -37,12 +38,15 @@ public class MenuView {
         return menuBar.getMenus().getFirst().getItems().getFirst();
     }
 
+    public MenuItem getSaveOptionButton() {
+        return menuBar.getMenus().getFirst().getItems().get(1);
+    }
+
     public MenuItem getHistogramViewButton() {
         return menuBar.getMenus().get(1).getItems().getFirst();
     }
 
-    public MenuItem getContrastSliderButton() {return menuBar.getMenus().get(1).getItems().get(1);
-    }
+    public MenuItem getContrastSliderButton() {return menuBar.getMenus().get(1).getItems().get(1);}
 
     public MenuItem getGrayScaleButton(){return menuBar.getMenus().get(1).getItems().get(2);}
 
