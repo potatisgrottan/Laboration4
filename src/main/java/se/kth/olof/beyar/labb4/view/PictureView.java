@@ -29,7 +29,8 @@ public class PictureView
     private Slider windowSlider;
     private Slider levelSlider;
     private ImageContrast contrast;
-
+    private Runnable contrastChangeCallback;
+    private ImageView imageView;
 
     public PictureView() {}
 
@@ -46,6 +47,7 @@ public class PictureView
         // Från PropertyBindingExample.java
         firstView.fitWidthProperty().bind(imageViewer.widthProperty());
         firstView.fitHeightProperty().bind(imageViewer.heightProperty());
+        imageView = firstView;
 
         return firstView;
     }
@@ -144,28 +146,22 @@ public class PictureView
         levelSlider.setPrefSize(350, 50);
 
         ogPicture = MatrixImageConverter.imageToIntMatrix(image);
-        windowSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            // System.out.println(observableValue + " " + oldValue + " " + newValue);
-            handlecontrast();
+
+        getWindowSlider().valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (contrastChangeCallback != null) {
+                contrastChangeCallback.run();
+            }
         });
 
-        levelSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            // System.out.println(observableValue + " " + oldValue + " " + newValue);
-            handlecontrast();
+        getLevelSlider().valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (contrastChangeCallback != null) {
+                contrastChangeCallback.run();
+            }
         });
 
         FlowPane contrastViewer = new FlowPane();
         contrastViewer.getChildren().addAll(windowSlider, levelSlider);
         return contrastViewer;
-    }
-
-    public void handlecontrast(){
-        contrast = new ImageContrast((int) getWindowSlider().getValue(),
-                (int) getLevelSlider().getValue());
-        System.out.println("Values { Window: " + (int) getWindowSlider().getValue() + ", Level: " + (int) getLevelSlider().getValue() + "}");
-        ogPicture = contrast.processImage(ogPicture);
-        wImage = MatrixImageConverter.intMatrixToImage(ogPicture);
-        createImagePreview(wImage);
     }
 
     public Slider getWindowSlider() {
@@ -174,5 +170,26 @@ public class PictureView
 
     public Slider getLevelSlider() {
         return levelSlider;
+    }
+
+    public int getWindowValue() {
+        return (int) getWindowSlider().getValue();
+    }
+
+    public int getLevelValue() {
+        return (int) getLevelSlider().getValue();
+    }
+
+    public void setContrastChangeCallback(Runnable callback) {
+        this.contrastChangeCallback = callback;
+    }
+
+    public int[][] getOgPicture()
+    {
+        return ogPicture;
+    }
+
+    public ImageView getImageView() {
+        return imageView;
     }
 }

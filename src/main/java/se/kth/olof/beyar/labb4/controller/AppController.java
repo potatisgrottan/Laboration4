@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import se.kth.olof.beyar.labb4.model.MenuModel;
@@ -56,6 +57,10 @@ public class AppController {
         mView.getContrastSliderButton().setOnAction(_ ->
                 handleConstrastSliderMenuButton(pModel.getImage())
         );
+
+        pView.setContrastChangeCallback(() -> {
+            handleContrast();
+        });
     }
 
     public MenuBar getMenuBar() {
@@ -83,7 +88,6 @@ public class AppController {
         histogramContrastSwitch = 0;
         displayControlAndImage();
         reRenderApp();
-
         System.out.println("Contrast slider option pressed!");
     }
 
@@ -131,17 +135,38 @@ public class AppController {
         hbox.setPadding(new Insets(10));
         hbox.setSpacing(10);
         HBox.setHgrow(imageViewer, Priority.ALWAYS);
+
         if (histogramContrastSwitch == 1) {
             hbox.getChildren().add(histogramView);
         } else {
             hbox.getChildren().add(contrastVeiw);
         }
+
         hbox.getChildren().add(imageViewer);
 
         return hbox;
     }
 
+    private void handleContrast() {
+        int windowValue = pView.getWindowValue();
+        int levelValue = pView.getLevelValue();
 
+        ImageContrast contrast = new ImageContrast(windowValue, levelValue);
+        System.out.println("Values { Window: " + windowValue + ", Level: " + levelValue + "}");
+
+        int[][] processedPicture = contrast.processImage(pView.getOgPicture());
+        WritableImage wImage = MatrixImageConverter.intMatrixToImage(processedPicture);
+
+        pModel.setImage(wImage);
+        updateImageView(wImage);
+    }
+
+    private void updateImageView(Image newImage) {
+        ImageView imageView = pView.getImageView();
+        if (imageView != null) {
+            imageView.setImage(newImage);
+        }
+    }
 
     public void reRenderApp(){
         HBox manipulateImageField = displayControlAndImage();
