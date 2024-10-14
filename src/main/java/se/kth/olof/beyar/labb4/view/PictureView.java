@@ -147,11 +147,15 @@ public class PictureView
         levelSlider.setShowTickLabels(true);
         levelSlider.setMajorTickUnit(60);
 
-        windowSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> 
-                );
+        /*windowSlider.valueProperty().addListener((observableValue, oldValue, newValue) ->
+
+        );
 
         levelSlider.valueProperty().addListener((observableValue, oldValue, newValue) ->
+
                 );
+
+         */
 
 
 
@@ -162,7 +166,7 @@ public class PictureView
 
 
 
-
+/*
     private void displayContrast(Image newImage){
 
         AtomicReference<Double> windowValue = new AtomicReference<>(0.0);
@@ -217,6 +221,8 @@ public class PictureView
         //app.pModel.setImage(newImage);
     }
 
+
+
     public Label getWindowLabel(){
         return windowLabel;
     }
@@ -225,7 +231,7 @@ public class PictureView
         return levelLabel;
     }
 
-    /*public Slider getLevelSlider() {
+    public Slider getLevelSlider() {
         return level;
     }
 

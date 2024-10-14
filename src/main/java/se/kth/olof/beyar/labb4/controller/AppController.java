@@ -32,7 +32,7 @@ public class AppController {
     private StatusModel sModel;
     private StatusView sView;
 
-    private FlowPane histogramContrastSwitch;
+    private int histogramContrastSwitch;
 
     public AppController(MenuModel mModel,MenuView mView,Stage stage, PictureModel pModel,
                          PictureView pView, StatusModel sModel,StatusView sView)
@@ -54,13 +54,13 @@ public class AppController {
         });
 
 
-        mView
-                .getHistogramViewButton()
-                .setOnAction(_ -> handleHistogramMenuButton());
+        mView.getHistogramViewButton().setOnAction(_ ->
+                handleHistogramMenuButton()
+        );
 
-        mView
-                .getContrastSliderButton()
-                .setOnAction(_ -> handleConstrastSliderMenuButton(pModel.getImage()));
+        mView.getContrastSliderButton().setOnAction(_ ->
+                handleConstrastSliderMenuButton(pModel.getImage())
+        );
 
 
     }
@@ -80,15 +80,16 @@ public class AppController {
     }
 
     private void handleHistogramMenuButton() {
-        histogramContrastSwitch = displayHistogram();
+        histogramContrastSwitch = 1;
         displayControlAndImage();
+        reRenderApp();
         System.out.println("Histogram button pressed!");
     }
 
     private void handleConstrastSliderMenuButton(Image image) {
-        histogramContrastSwitch = displayContrast();
+        histogramContrastSwitch = 0;
         displayControlAndImage();
-
+        reRenderApp();
         System.out.println("Contrast slider option pressed!");
     }
 
@@ -122,6 +123,8 @@ public class AppController {
     }
 
     public HBox displayControlAndImage() {
+        FlowPane histogramView = displayHistogram();
+        FlowPane contrastVeiw = displayContrast();
         ImageView imageViewer = displayImagePreview();
 
         // Skapar horizontell split mellan två vyer och lägger till komponenter
@@ -129,7 +132,12 @@ public class AppController {
         hbox.setPadding(new Insets(10));
         hbox.setSpacing(10);
         HBox.setHgrow(imageViewer, Priority.ALWAYS);
-        hbox.getChildren().add(histogramContrastSwitch);
+        if(histogramContrastSwitch==1){
+            hbox.getChildren().add(histogramView);
+        }
+        else{
+            hbox.getChildren().add(contrastVeiw);
+        }
         hbox.getChildren().add(imageViewer);
 
         return hbox;
