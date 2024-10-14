@@ -160,7 +160,7 @@ public class PictureView
 
 
         FlowPane contrastViewer = new FlowPane();
-
+        contrastViewer.getChildren().addAll(windowSlider, levelSlider);
         return contrastViewer;
     }
 
