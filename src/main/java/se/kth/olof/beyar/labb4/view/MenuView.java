@@ -26,6 +26,7 @@ public class MenuView {
         menuBar.getMenus().addAll(fileMenu, generateMenu);
     }
 
+
     public MenuBar getMenuBar() {
         return menuBar;
     }

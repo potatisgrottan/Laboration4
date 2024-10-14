@@ -35,6 +35,7 @@ public class MenuController {
     private void handleOpenFile() {
         model.openAndReadFile(stage);
         System.out.println("New image loaded!");
+
     }
 
     public ImageView getChosenImageViewFromMenu() {

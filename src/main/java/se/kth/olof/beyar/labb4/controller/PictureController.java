@@ -21,6 +21,8 @@ public class PictureController
         this.view = view;
     }
 
+
+
     public ImageView displayImagePreview() {
         Image image = model.getImage();
         return view.createImagePreview(image);

@@ -10,7 +10,6 @@ public class PictureModel
     private int colorFilterSwitch;
 
     public PictureModel() {
-        // Ta bort hårdkodningen
         setImageFromPath("/images/skull_ct.png");
         this.colorFilterSwitch = 0;
     }
