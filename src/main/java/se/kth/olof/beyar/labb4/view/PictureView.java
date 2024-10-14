@@ -52,7 +52,7 @@ public class PictureView
         return firstView;
     }
 
-    public FlowPane createHistogram(ImageHistogram imageHistogram, Image image, int colorFilterSwitch)
+    public FlowPane createHistogram(ImageHistogram imageHistogram, Image image)
     {
         // Histogram, code from https://java-buddy.blogspot.com/2015/07/display-images-histogram-on-javafx.html
         Button updateButton = new Button("Update");
@@ -62,10 +62,8 @@ public class PictureView
         final LineChart<String, Number> chartHistogram = new LineChart<>(xAxis, yAxis);
         chartHistogram.setCreateSymbols(false);
 
-
         updateButton.setOnAction(_ -> {
             imageDisplay.setImage(wImage);
-
 
             if (imageHistogram.isSuccess()) {
                 chartHistogram.getData().clear();
@@ -78,23 +76,6 @@ public class PictureView
             }
 
             ogPicture = MatrixImageConverter.imageToIntMatrix(image);
-
-           /* if (colorFilterSwitch == 0) {
-                ogPicture = MatrixImageConverter.imageToIntMatrix(image);
-            } else if (colorFilterSwitch == 1) {
-                ImageGrayScale gray = new ImageGrayScale();
-                ogPicture = gray.processImage(ogPicture);
-            } else if (colorFilterSwitch == 2) {
-                ImageInvertColor invert = new ImageInvertColor();
-                ogPicture = invert.processImage(ogPicture);
-            } else if (colorFilterSwitch == 3){
-                ImageContrast con = new ImageContrast(150,50);
-                ogPicture = con.processImage(ogPicture);
-            } else {
-                throw new IllegalStateException("We should not be able to increment to this level: " + colorFilterSwitch);
-            }
-
-            */
 
             //assert (ogPicture != null);
             wImage = MatrixImageConverter.intMatrixToImage(ogPicture);

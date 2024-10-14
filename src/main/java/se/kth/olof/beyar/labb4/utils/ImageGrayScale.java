@@ -1,7 +1,5 @@
 package se.kth.olof.beyar.labb4.utils;
 
-import se.kth.olof.beyar.labb4.controller.IProcessor;
-
 public class ImageGrayScale implements IProcessor {
 
     public ImageGrayScale() {}

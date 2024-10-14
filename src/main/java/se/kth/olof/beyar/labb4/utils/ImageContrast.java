@@ -1,8 +1,6 @@
 package se.kth.olof.beyar.labb4.utils;
 
 
-import se.kth.olof.beyar.labb4.controller.IProcessor;
-
 public class ImageContrast implements IProcessor {
     int valueWindowSlider;
     int valueLevelSlider;
