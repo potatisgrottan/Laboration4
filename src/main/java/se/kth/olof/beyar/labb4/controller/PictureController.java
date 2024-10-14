@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import se.kth.olof.beyar.labb4.model.ImageHistogram;
 import se.kth.olof.beyar.labb4.model.PictureModel;
 import se.kth.olof.beyar.labb4.view.PictureView;
 
@@ -32,7 +33,8 @@ public class PictureController
     public FlowPane displayHistogram() {
         Image image = model.getImage();
         int colorFilterSwitch = model.getColorFilterSwitch();
-        return view.createHistogram(image, colorFilterSwitch);
+        ImageHistogram imageHistogram = new ImageHistogram(image);
+        return view.createHistogram(imageHistogram, image, colorFilterSwitch);
     }
 
     public HBox displayControlAndImage() {
