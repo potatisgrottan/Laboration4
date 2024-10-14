@@ -58,6 +58,10 @@ public class AppController {
                 handleConstrastSliderMenuButton(pModel.getImage())
         );
 
+        mView.getGrayScaleButton().setOnAction(_-> handleGrayScale());
+
+        mView.getInvertedColorButton().setOnAction(_-> handleInvertedColor());
+
         pView.setContrastChangeCallback(() -> {
             handleContrast();
         });
@@ -89,6 +93,35 @@ public class AppController {
         displayControlAndImage();
         reRenderApp();
         System.out.println("Contrast slider option pressed!");
+    }
+
+    private void handleContrast() {
+        int windowValue = pView.getWindowValue();
+        int levelValue = pView.getLevelValue();
+
+        ImageContrast contrast = new ImageContrast(windowValue, levelValue);
+        System.out.println("Values { Window: " + windowValue + ", Level: " + levelValue + "}");
+
+        int[][] processedPicture = contrast.processImage(pView.getOgPicture());
+        WritableImage wImage = MatrixImageConverter.intMatrixToImage(processedPicture);
+
+        pModel.setImage(wImage);
+        updateImageView(wImage);
+    }
+
+    private void handleGrayScale(){
+        ImageGrayScale gray = new ImageGrayScale();
+
+        int[][] processedPicture = gray.processImage(pView.getOgPicture());
+        pModel.setImage(MatrixImageConverter.intMatrixToImage(processedPicture));
+        updateImageView(pModel.getImage());
+    }
+
+    private void handleInvertedColor(){
+        ImageInvertColor invert = new ImageInvertColor();
+        int[][] processedPicture = invert.processImage(pView.getOgPicture());
+        pModel.setImage(MatrixImageConverter.intMatrixToImage(processedPicture));
+        updateImageView(pModel.getImage());
     }
 
     public ImageView displayImagePreview() {
@@ -147,19 +180,7 @@ public class AppController {
         return hbox;
     }
 
-    private void handleContrast() {
-        int windowValue = pView.getWindowValue();
-        int levelValue = pView.getLevelValue();
 
-        ImageContrast contrast = new ImageContrast(windowValue, levelValue);
-        System.out.println("Values { Window: " + windowValue + ", Level: " + levelValue + "}");
-
-        int[][] processedPicture = contrast.processImage(pView.getOgPicture());
-        WritableImage wImage = MatrixImageConverter.intMatrixToImage(processedPicture);
-
-        pModel.setImage(wImage);
-        updateImageView(wImage);
-    }
 
     private void updateImageView(Image newImage) {
         ImageView imageView = pView.getImageView();
