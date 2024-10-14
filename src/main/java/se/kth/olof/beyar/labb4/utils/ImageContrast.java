@@ -10,12 +10,6 @@ public class ImageContrast implements IProcessor {
         this.valueLevelSlider=valueLevelSlider;
     }
 
-    public ImageContrast(int valueWindowSlider, int valueLevelSlider, int[][] originalImage){
-        this.valueWindowSlider=valueWindowSlider;
-        this.valueLevelSlider=valueLevelSlider;
-        processImage(originalImage);
-    }
-
     @Override
     public int[][] processImage(int[][] originalImage) {
         int height = originalImage.length;
@@ -57,6 +51,6 @@ public class ImageContrast implements IProcessor {
      * Clamp is a function designed to keep the calculations that are sent in the range 0-255
      **/
     private int clamp(int value){
-        return Math.max(0,Math.min(255,value));
+        return Math.max(0, Math.min(255,value));
     }
 }

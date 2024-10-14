@@ -68,7 +68,7 @@ public class PictureView
             if (imageHistogram.isSuccess()) {
                 chartHistogram.getData().clear();
                 chartHistogram.getData().addAll(
-                        //imageHistogram.getSeriesAlpha(),
+                        // imageHistogram.getSeriesAlpha(),
                         imageHistogram.getSeriesRed(),
                         imageHistogram.getSeriesGreen(),
                         imageHistogram.getSeriesBlue()
@@ -129,15 +129,13 @@ public class PictureView
         ogPicture = MatrixImageConverter.imageToIntMatrix(image);
 
         getWindowSlider().valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            if (contrastChangeCallback != null) {
+            if (contrastChangeCallback != null)
                 contrastChangeCallback.run();
-            }
         });
 
         getLevelSlider().valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            if (contrastChangeCallback != null) {
+            if (contrastChangeCallback != null)
                 contrastChangeCallback.run();
-            }
         });
 
         FlowPane contrastViewer = new FlowPane();

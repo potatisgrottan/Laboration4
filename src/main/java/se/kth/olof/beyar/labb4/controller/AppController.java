@@ -100,9 +100,7 @@ public class AppController {
         int windowValue = pView.getWindowValue();
         int levelValue = pView.getLevelValue();
 
-        // System.out.println("Values { Window: " + windowValue + ", Level: " + levelValue + "}");
         ImageContrast contrast = new ImageContrast(windowValue, levelValue);
-
         int[][] processedPicture = contrast.processImage(pView.getOgPicture());
         WritableImage wImage = MatrixImageConverter.intMatrixToImage(processedPicture);
         pModel.setImage(wImage);
