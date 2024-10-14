@@ -19,8 +19,10 @@ public class MenuView {
         Menu generateMenu = new Menu("Generate");
         MenuItem histogramView = new MenuItem("Histogram");
         MenuItem contrastSliderView = new MenuItem("Contrast slider");
-        generateMenu.getItems().add(histogramView);
-        generateMenu.getItems().add(contrastSliderView);
+        MenuItem grayScaleOption = new MenuItem("Gray Scale");
+        MenuItem invertColorOption = new MenuItem("Invert Color");
+
+        generateMenu.getItems().addAll(histogramView,contrastSliderView,grayScaleOption,invertColorOption);
 
         menuBar = new MenuBar();
         menuBar.getMenus().addAll(fileMenu, generateMenu);
@@ -39,7 +41,10 @@ public class MenuView {
         return menuBar.getMenus().get(1).getItems().getFirst();
     }
 
-    public MenuItem getContrastSliderButton() {
-        return menuBar.getMenus().get(1).getItems().get(1);
+    public MenuItem getContrastSliderButton() {return menuBar.getMenus().get(1).getItems().get(1);
     }
+
+    public MenuItem getGrayScaleButton(){return menuBar.getMenus().get(1).getItems().get(2);}
+
+    public MenuItem getInvertedColorButton(){return menuBar.getMenus().get(1).getItems().get(3);}
 }
