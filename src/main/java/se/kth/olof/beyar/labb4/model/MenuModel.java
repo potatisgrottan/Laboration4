@@ -3,10 +3,8 @@ package se.kth.olof.beyar.labb4.model;
 import java.io.File;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import se.kth.olof.beyar.labb4.controller.PictureController;
 
 public class MenuModel {
 

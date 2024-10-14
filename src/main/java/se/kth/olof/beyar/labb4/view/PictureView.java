@@ -31,8 +31,7 @@ public class PictureView
     private ImageContrast contrast;
 
 
-    public PictureView() {
-    }
+    public PictureView() {}
 
     public ImageView createImagePreview(Image image)
     {
@@ -146,15 +145,13 @@ public class PictureView
 
         ogPicture = MatrixImageConverter.imageToIntMatrix(image);
         windowSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            //System.out.println(observableValue + " " + oldValue + " " + newValue);
+            // System.out.println(observableValue + " " + oldValue + " " + newValue);
             handlecontrast();
-
         });
 
         levelSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            //System.out.println(observableValue + " " + oldValue + " " + newValue);
+            // System.out.println(observableValue + " " + oldValue + " " + newValue);
             handlecontrast();
-
         });
 
         FlowPane contrastViewer = new FlowPane();
@@ -165,7 +162,7 @@ public class PictureView
     public void handlecontrast(){
         contrast = new ImageContrast((int) getWindowSlider().getValue(),
                 (int) getLevelSlider().getValue());
-        System.out.println(getLevelSlider().getValue()+" "+getWindowSlider().getValue());
+        System.out.println("Values { Window: " + (int) getWindowSlider().getValue() + ", Level: " + (int) getLevelSlider().getValue() + "}");
         ogPicture = contrast.processImage(ogPicture);
         wImage = MatrixImageConverter.intMatrixToImage(ogPicture);
         createImagePreview(wImage);
@@ -177,9 +174,5 @@ public class PictureView
 
     public Slider getLevelSlider() {
         return levelSlider;
-    }
-
-    public int[][] getOgPicture() {
-        return ogPicture;
     }
 }

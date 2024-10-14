@@ -2,12 +2,9 @@ package se.kth.olof.beyar.labb4.controller;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import se.kth.olof.beyar.labb4.model.MenuModel;
@@ -17,9 +14,6 @@ import se.kth.olof.beyar.labb4.utils.*;
 import se.kth.olof.beyar.labb4.view.MenuView;
 import se.kth.olof.beyar.labb4.view.PictureView;
 import se.kth.olof.beyar.labb4.view.StatusView;
-
-import java.text.DecimalFormat;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class AppController {
 
@@ -32,12 +26,6 @@ public class AppController {
 
     private StatusModel sModel;
     private StatusView sView;
-
-    private ImageContrast contrast;
-    private ImageGrayScale gray;
-    private ImageInvertColor invert;
-
-    private WritableImage wImage;
 
     private int histogramContrastSwitch;
 
@@ -68,13 +56,6 @@ public class AppController {
         mView.getContrastSliderButton().setOnAction(_ ->
                 handleConstrastSliderMenuButton(pModel.getImage())
         );
-
-
-       /* levelSlider.valueProperty().addListener((observableValue, oldValue, newValue) ->
-
-                );*/
-
-
     }
 
     public MenuBar getMenuBar() {
@@ -106,29 +87,21 @@ public class AppController {
         System.out.println("Contrast slider option pressed!");
     }
 
-    public void handlecontrast(){
-        contrast = new ImageContrast((int) pView.getWindowSlider().getValue(),
-                (int) pView.getLevelSlider().getValue());
-        int [][] ogPicture = pView.getOgPicture();
-        ogPicture = contrast.processImage(ogPicture);
-        wImage = MatrixImageConverter.intMatrixToImage(ogPicture);
-        pView.createImagePreview(wImage);
-        reRenderApp();
-    }
-
     public ImageView displayImagePreview() {
         Image image;
-        if(mModel.getChosenImageViewFromMenu().getImage()==null){
+
+        if (mModel.getChosenImageViewFromMenu().getImage() == null) {
            image = pModel.getImage();
-        }
-        else{
+        } else {
             image = mModel.getChosenImageViewFromMenu().getImage();
         }
-        if(histogramContrastSwitch==1){
+
+        if (histogramContrastSwitch==1) {
             sModel.setStatusMsg("Histogram generated");
-        }else{
+        } else {
             sModel.setStatusMsg("Sliders generated");
         }
+
         return pView.createImagePreview(image);
     }
 
@@ -145,7 +118,6 @@ public class AppController {
 
     public FlowPane displayContrast(){
         Image image = pModel.getImage();
-
         return pView.createContrast(image);
     }
 
@@ -159,10 +131,9 @@ public class AppController {
         hbox.setPadding(new Insets(10));
         hbox.setSpacing(10);
         HBox.setHgrow(imageViewer, Priority.ALWAYS);
-        if(histogramContrastSwitch==1){
+        if (histogramContrastSwitch == 1) {
             hbox.getChildren().add(histogramView);
-        }
-        else{
+        } else {
             hbox.getChildren().add(contrastVeiw);
         }
         hbox.getChildren().add(imageViewer);
