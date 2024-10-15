@@ -1,6 +1,8 @@
 package se.kth.olof.beyar.labb4.model;
 
 import java.net.URL;
+
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 
 /**
@@ -9,12 +11,26 @@ import javafx.scene.image.Image;
 public class PictureModel
 {
     private Image image;
+    private Slider windowSlider;
+    private Slider levelSlider;
 
     /**
      * Constructs a PictureModel object and sets an initial image from a predefined path.
      */
     public PictureModel() {
         setImageFromPath("/images/skull_ct.png");
+        this.windowSlider = new Slider(0,255,127);
+        this.levelSlider = new Slider(0,255,127);
+    }
+
+    public Slider getWindowSlider()
+    {
+        return windowSlider;
+    }
+
+    public Slider getLevelSlider()
+    {
+        return levelSlider;
     }
 
     /**

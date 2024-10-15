@@ -11,7 +11,6 @@ import se.kth.olof.beyar.labb4.view.MenuView;
 import se.kth.olof.beyar.labb4.view.PictureView;
 import se.kth.olof.beyar.labb4.view.StatusView;
 
-
 /**
  * The controller class for managing the application's overall behavior.
  */
@@ -43,13 +42,14 @@ public class AppController {
     public AppController(MenuModel mModel,MenuView mView,Stage stage, PictureModel pModel,
                          PictureView pView, StatusModel sModel,StatusView sView)
     {
-        this.mModel=mModel;
-        this.mView=mView;
-        this.stage=stage;
-        this.pModel=pModel;
-        this.pView=pView;
-        this.sModel=sModel;
-        this.sView=sView;
+        this.mModel = mModel;
+        this.mView = mView;
+        this.stage = stage;
+        this.pModel = pModel;
+        this.pView = pView;
+        this.sModel = sModel;
+        this.sView = sView;
+
         initializeListeners();
     }
 
@@ -62,17 +62,12 @@ public class AppController {
             reRenderApp();
         });
 
-        mView.getSaveOptionButton().setOnAction(_ -> handleSaveFile() );
-
-        mView.getHistogramViewButton().setOnAction(_ -> handleHistogramMenuButton() );
-
-        mView.getContrastSliderButton().setOnAction(_ -> handleConstrastSliderMenuButton() );
-
-        mView.getGrayScaleButton().setOnAction(_-> handleGrayScale());
-
-        mView.getInvertedColorButton().setOnAction(_-> handleInvertedColor());
-
-        pView.setContrastChangeCallback(() -> handleContrast()) ;
+        mView.getSaveOptionButton().setOnAction(_ -> handleSaveFile());
+        mView.getHistogramViewButton().setOnAction(_ -> handleHistogramMenuButton());
+        mView.getContrastSliderButton().setOnAction(_ -> handleConstrastSliderMenuButton());
+        mView.getGrayScaleButton().setOnAction(_ -> handleGrayScale());
+        mView.getInvertedColorButton().setOnAction(_ -> handleInvertedColor());
+        pView.setContrastChangeCallback(() -> handleContrast());
     }
 
     /**
@@ -96,37 +91,36 @@ public class AppController {
      * Handles the action of displaying the histogram view.
      */
     private void handleHistogramMenuButton() {
-        histogramContrastSwitch = 1;
+        histogramContrastSwitch = 0;
         FlowPane displayHistogram = pView.displayHistogram(pModel.getImage());
         sModel.setStatusMsg("Histogram generated");
         pView.displayControlAndImage(mModel.getChosenImageViewFromMenu().getImage(),pModel.getImage(),displayHistogram);
         reRenderApp();
-        System.out.println("Histogram button pressed!");
     }
 
     /**
      * Handles the action of displaying the contrast slider view.
      */
     private void handleConstrastSliderMenuButton() {
-        histogramContrastSwitch = 0;
+        histogramContrastSwitch = 1;
         FlowPane displayContrast = pView.displayContrast(pModel.getImage());
         sModel.setStatusMsg("Contrast generated");
         pView.displayControlAndImage(mModel.getChosenImageViewFromMenu().getImage(),pModel.getImage(),displayContrast);
         reRenderApp();
-        System.out.println("Contrast slider option pressed!");
     }
 
     /**
      * Handles the action of updating the contrast of the image.
      */
     private void handleContrast() {
-        int windowValue = pView.getWindowValue();
-        int levelValue = pView.getLevelValue();
-
+        int windowValue = (int) pModel.getWindowSlider().getValue();
+        int levelValue = (int) pModel.getLevelSlider().getValue();
         ImageContrast contrast = new ImageContrast(windowValue, levelValue);
+
         int[][] processedPicture = contrast.processImage(pView.getOgPicture());
         WritableImage wImage = MatrixImageConverter.intMatrixToImage(processedPicture);
         pModel.setImage(wImage);
+
         pView.updateImageView(wImage);
     }
 
@@ -155,9 +149,6 @@ public class AppController {
         mModel.getChosenImageViewFromMenu().setImage(wImage);
         reRenderApp();
     }
-
-
-
 
     /**
      * Re-renders the application UI by calling reRenderAppFunction in PictureView.

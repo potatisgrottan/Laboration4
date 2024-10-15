@@ -26,8 +26,6 @@ public class PictureView
 {
     private WritableImage wImage;
     private int[][] ogPicture;
-    private Slider windowSlider;
-    private Slider levelSlider;
     private ImageContrast contrast;
     private Runnable contrastChangeCallback;
     private ImageView imageView;
@@ -92,8 +90,6 @@ public class PictureView
             }
 
             ogPicture = MatrixImageConverter.imageToIntMatrix(image);
-
-            //assert (ogPicture != null);
             wImage = MatrixImageConverter.intMatrixToImage(ogPicture);
 
             // Update the image view
@@ -134,10 +130,7 @@ public class PictureView
      * @param image The image for which the contrast is to be adjusted.
      * @return The FlowPane containing the contrast adjustment sliders.
      */
-    public FlowPane createContrast(Image image){
-        windowSlider = new Slider(0,255,127);
-        levelSlider = new Slider(0,255,127);
-
+    public FlowPane createContrast(Image image, Slider windowSlider, Slider levelSlider){
         windowSlider.setShowTickMarks(true);
         windowSlider.setShowTickLabels(true);
         windowSlider.setMajorTickUnit(55);
@@ -150,12 +143,12 @@ public class PictureView
 
         ogPicture = MatrixImageConverter.imageToIntMatrix(image);
 
-        getWindowSlider().valueProperty().addListener((observableValue, oldValue, newValue) -> {
+        windowSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             if (contrastChangeCallback != null)
                 contrastChangeCallback.run();
         });
 
-        getLevelSlider().valueProperty().addListener((observableValue, oldValue, newValue) -> {
+        levelSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             if (contrastChangeCallback != null)
                 contrastChangeCallback.run();
         });
@@ -163,42 +156,6 @@ public class PictureView
         FlowPane contrastViewer = new FlowPane();
         contrastViewer.getChildren().addAll(windowSlider, levelSlider);
         return contrastViewer;
-    }
-
-    /**
-     * Gets the window slider for contrast adjustment.
-     *
-     * @return The window slider.
-     */
-    public Slider getWindowSlider() {
-        return windowSlider;
-    }
-
-    /**
-     * Gets the level slider for contrast adjustment.
-     *
-     * @return The level slider.
-     */
-    public Slider getLevelSlider() {
-        return levelSlider;
-    }
-
-    /**
-     * Gets the current value of the window slider.
-     *
-     * @return The value of the window slider.
-     */
-    public int getWindowValue() {
-        return (int) getWindowSlider().getValue();
-    }
-
-    /**
-     * Gets the current value of the level slider.
-     *
-     * @return The value of the level slider.
-     */
-    public int getLevelValue() {
-        return (int) getLevelSlider().getValue();
     }
 
     /**
