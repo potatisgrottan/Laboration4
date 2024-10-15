@@ -1,10 +1,12 @@
 package se.kth.olof.beyar.labb4.view;
 
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,6 +14,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
+import javafx.stage.Stage;
 import se.kth.olof.beyar.labb4.utils.ImageContrast;
 import se.kth.olof.beyar.labb4.utils.ImageHistogram;
 import se.kth.olof.beyar.labb4.utils.MatrixImageConverter;
@@ -224,5 +227,101 @@ public class PictureView
      */
     public ImageView getImageView() {
         return imageView;
+    }
+
+    /**
+     * Displays an image preview.
+     *
+     * @return An ImageView containing the image preview.
+     */
+    public ImageView displayImagePreview(Image mImage, Image pImage) {
+        Image image;
+
+        if (mImage == null) {
+            image = pImage;
+        } else {
+            image = mImage;
+        }
+
+
+        return createImagePreview(image);
+    }
+
+    /**
+     * Displays the appropriate control (histogram or contrast) along with the image.
+     *
+     * @return An HBox containing the controls and the image.
+     */
+    public HBox displayControlAndImage(Image mImage, Image pImage, FlowPane chosenDisplay) {
+        ImageView imageViewer = displayImagePreview(mImage,pImage);
+
+
+        // Skapar horizontell split mellan två vyer och lägger till komponenter
+        HBox hbox = new HBox();
+        hbox.setPadding(new Insets(10));
+        hbox.setSpacing(10);
+        HBox.setHgrow(imageViewer, Priority.ALWAYS);
+
+        hbox.getChildren().add(chosenDisplay);
+        hbox.getChildren().add(imageViewer);
+
+        return hbox;
+    }
+
+    /**
+     * Displays the histogram view.
+     *
+     * @return A FlowPane containing the histogram.
+     */
+    public FlowPane displayHistogram(Image pImage) {
+        ImageHistogram imageHistogram = new ImageHistogram(pImage);
+        return createHistogram(imageHistogram, pImage);
+    }
+
+    /**
+     * Displays the contrast adjustment view.
+     *
+     * @return A FlowPane containing the contrast sliders.
+     */
+    public FlowPane displayContrast(Image pImage){
+
+        return createContrast(pImage);
+    }
+
+    /**
+     * Re-renders the application UI.
+     */
+    public void reRenderApp(Image pImage, Image mImage, Stage stage, MenuBar menuBar,FlowPane status, FlowPane chosenDisplay){
+
+        HBox manipulateImageField = displayControlAndImage(mImage,pImage,chosenDisplay);
+        updateImageView(pImage);
+
+        VBox vbox = new VBox();
+        VBox.setVgrow(manipulateImageField, Priority.ALWAYS);
+        vbox.getChildren().add(menuBar);
+        vbox.getChildren().add(manipulateImageField);
+        vbox.getChildren().add(status);
+
+        StackPane root = new StackPane();
+        root.getChildren().add(vbox);
+
+        // Konfigurerar och visar fönstret
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.sizeToScene();
+        stage.setResizable(true);
+        stage.setTitle("Image Processing");
+        stage.show();
+    }
+
+    /**
+     * Updates the image view with a new image.
+     *
+     * @param newImage The new image to be displayed.
+     */
+    public void updateImageView(Image newImage) {
+        if (imageView != null) {
+            imageView.setImage(newImage);
+        }
     }
 }

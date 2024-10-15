@@ -47,4 +47,6 @@ public class PictureModel
     public Image getImage() {
         return image;
     }
+
+
 }
