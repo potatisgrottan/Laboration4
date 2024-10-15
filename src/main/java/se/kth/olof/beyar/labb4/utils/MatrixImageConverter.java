@@ -14,7 +14,8 @@ public class MatrixImageConverter {
      * Converts a matrix of ARGB integer values to a WritableImage.
      *
      * @param imageMatrix The matrix of ARGB values representing the image.
-     * @return A WritableImage created from the given int matrix.*/
+     * @return A WritableImage created from the given int matrix.
+     * */
     public static WritableImage intMatrixToImage(int[][] imageMatrix){
         int height = imageMatrix.length;
         int width = imageMatrix[0].length;
@@ -34,7 +35,8 @@ public class MatrixImageConverter {
      * Converts a matrix of ARGB integer values to a WritableImage.
      *
      * @param image the image that is converted to a matrix.
-     * @return A matrix containing the argb values of the image.*/
+     * @return A matrix containing the argb values of the image.
+     * */
     public static int[][] imageToIntMatrix(Image image){
         int height = (int)image.getHeight();
         int width = (int)image.getWidth();
