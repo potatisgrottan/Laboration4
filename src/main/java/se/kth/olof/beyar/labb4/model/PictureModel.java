@@ -19,8 +19,7 @@ public class PictureModel
      */
     public PictureModel() {
         setImageFromPath("/images/skull_ct.png");
-        this.windowSlider = new Slider(0,255,127);
-        this.levelSlider = new Slider(0,255,127);
+        resetSlidersState();
     }
 
     public Slider getWindowSlider()
@@ -31,6 +30,12 @@ public class PictureModel
     public Slider getLevelSlider()
     {
         return levelSlider;
+    }
+
+    public void resetSlidersState()
+    {
+        windowSlider = new Slider(0,255,127);
+        levelSlider = new Slider(0,255,127);
     }
 
     /**

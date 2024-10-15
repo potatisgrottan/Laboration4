@@ -78,7 +78,10 @@ public class AppController
         mModel.openAndReadFile(stage);
 
         if (mModel.isImageUploaded())
+        {
             pModel.setImage(mModel.getChosenImageViewFromMenu().getImage());
+            pModel.resetSlidersState();
+        }
     }
 
     /**
@@ -161,7 +164,7 @@ public class AppController
         FlowPane chosenDisplay;
         Slider windowValue = pModel.getWindowSlider();
         Slider levelValue = pModel.getLevelSlider();
-        if (histogramContrastSwitch == 1) {
+        if (histogramContrastSwitch == 0) {
             sModel.setStatusMsg("Histogram generated");
             chosenDisplay = pView.displayHistogram(pModel.getImage());
         } else {
