@@ -16,6 +16,10 @@ import se.kth.olof.beyar.labb4.view.MenuView;
 import se.kth.olof.beyar.labb4.view.PictureView;
 import se.kth.olof.beyar.labb4.view.StatusView;
 
+
+/**
+ * The controller class for managing the application's overall behavior.
+ */
 public class AppController {
     private Stage stage;
 
@@ -30,6 +34,17 @@ public class AppController {
 
     private int histogramContrastSwitch;
 
+    /**
+     * Constructs an AppController object with the specified models, views, and stage.
+     *
+     * @param mModel The menu model.
+     * @param mView The menu view.
+     * @param stage The main application stage.
+     * @param pModel The picture model.
+     * @param pView The picture view.
+     * @param sModel The status model.
+     * @param sView The status view.
+     */
     public AppController(MenuModel mModel,MenuView mView,Stage stage, PictureModel pModel,
                          PictureView pView, StatusModel sModel,StatusView sView)
     {
@@ -43,6 +58,9 @@ public class AppController {
         initializeListeners();
     }
 
+    /**
+     * Initializes event listeners for the menu options and picture view.
+     */
     private void initializeListeners() {
         mView.getOpenFileOptionButton().setOnAction(_ -> {
             handleOpenFile();
@@ -62,15 +80,28 @@ public class AppController {
         pView.setContrastChangeCallback(() -> handleContrast()) ;
     }
 
+    /**
+     * Gets the MenuBar object.
+     *
+     * @return The MenuBar object.
+     */
     public MenuBar getMenuBar() {
         return mView.getMenuBar();
     }
 
+    /**
+     * Builds the status view containing the status message.
+     *
+     * @return The FlowPane containing the status message.
+     */
     public FlowPane buildStatusView()
     {
         return sView.createStatus(sModel.getStatusMsg());
     }
 
+    /**
+     * Handles the action of opening and reading a file.
+     */
     private void handleOpenFile(){
         mModel.openAndReadFile(stage);
 
@@ -78,10 +109,16 @@ public class AppController {
             pModel.setImage(mModel.getChosenImageViewFromMenu().getImage());
     }
 
+    /**
+     * Handles the action of saving a file.
+     */
     private void handleSaveFile(){
         mModel.saveFile(pModel.getImage());
     }
 
+    /**
+     * Handles the action of displaying the histogram view.
+     */
     private void handleHistogramMenuButton() {
         histogramContrastSwitch = 1;
         displayControlAndImage();
@@ -89,6 +126,9 @@ public class AppController {
         System.out.println("Histogram button pressed!");
     }
 
+    /**
+     * Handles the action of displaying the contrast slider view.
+     */
     private void handleConstrastSliderMenuButton() {
         histogramContrastSwitch = 0;
         displayControlAndImage();
@@ -96,6 +136,9 @@ public class AppController {
         System.out.println("Contrast slider option pressed!");
     }
 
+    /**
+     * Handles the action of updating the contrast of the image.
+     */
     private void handleContrast() {
         int windowValue = pView.getWindowValue();
         int levelValue = pView.getLevelValue();
@@ -107,6 +150,9 @@ public class AppController {
         updateImageView(wImage);
     }
 
+    /**
+     * Handles the action of converting the image to grayscale.
+     */
     private void handleGrayScale(){
         ImageGrayScale gray = new ImageGrayScale();
 
@@ -117,6 +163,9 @@ public class AppController {
         reRenderApp();
     }
 
+    /**
+     * Handles the action of inverting the colors of the image.
+     */
     private void handleInvertedColor(){
         ImageInvertColor invert = new ImageInvertColor();
 
@@ -127,6 +176,11 @@ public class AppController {
         reRenderApp();
     }
 
+    /**
+     * Displays an image preview.
+     *
+     * @return An ImageView containing the image preview.
+     */
     public ImageView displayImagePreview() {
         Image image;
 
@@ -145,17 +199,32 @@ public class AppController {
         return pView.createImagePreview(image);
     }
 
+    /**
+     * Displays the histogram view.
+     *
+     * @return A FlowPane containing the histogram.
+     */
     public FlowPane displayHistogram() {
         Image image = pModel.getImage();
         ImageHistogram imageHistogram = new ImageHistogram(image);
         return pView.createHistogram(imageHistogram, image);
     }
 
+    /**
+     * Displays the contrast adjustment view.
+     *
+     * @return A FlowPane containing the contrast sliders.
+     */
     public FlowPane displayContrast(){
         Image image = pModel.getImage();
         return pView.createContrast(image);
     }
 
+    /**
+     * Displays the appropriate control (histogram or contrast) along with the image.
+     *
+     * @return An HBox containing the controls and the image.
+     */
     public HBox displayControlAndImage() {
         FlowPane histogramView = displayHistogram();
         FlowPane contrastVeiw = displayContrast();
@@ -178,6 +247,11 @@ public class AppController {
         return hbox;
     }
 
+    /**
+     * Updates the image view with a new image.
+     *
+     * @param newImage The new image to be displayed.
+     */
     private void updateImageView(Image newImage) {
         ImageView imageView = pView.getImageView();
         if (imageView != null) {
@@ -185,6 +259,9 @@ public class AppController {
         }
     }
 
+    /**
+     * Re-renders the application UI.
+     */
     public void reRenderApp(){
         HBox manipulateImageField = displayControlAndImage();
         updateImageView(pModel.getImage());
