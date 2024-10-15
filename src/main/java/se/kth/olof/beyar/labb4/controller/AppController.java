@@ -62,8 +62,8 @@ public class AppController
             handleOpenFile();
             reRenderApp();
         });
-
         mView.getSaveOptionButton().setOnAction(_ -> handleSaveFile());
+        mView.getExitOptionButton().setOnAction(_ -> handleExit());
         mView.getHistogramViewButton().setOnAction(_ -> handleHistogramMenuButton());
         mView.getContrastSliderButton().setOnAction(_ -> handleConstrastSliderMenuButton());
         mView.getGrayScaleButton().setOnAction(_ -> handleGrayScale());
@@ -89,6 +89,14 @@ public class AppController
      */
     private void handleSaveFile() {
         mModel.saveFile(pModel.getImage());
+    }
+
+    /**
+     * Handles the action of exiting the app
+     */
+    private void handleExit() {
+        final int success = 0;
+        System.exit(success);
     }
 
     /**

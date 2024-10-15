@@ -24,14 +24,14 @@ public class MenuView {
         Menu fileMenu = new Menu("File");
         MenuItem openFileOption = new MenuItem("Load image");
         MenuItem saveImageOption = new MenuItem("Save image");
-        fileMenu.getItems().addAll(openFileOption, saveImageOption);
+        MenuItem exitOption = new MenuItem("Exit");
+        fileMenu.getItems().addAll(openFileOption, saveImageOption, exitOption);
 
         Menu generateMenu = new Menu("Generate");
         MenuItem histogramView = new MenuItem("Histogram");
         MenuItem contrastSliderView = new MenuItem("Contrast slider");
         MenuItem grayScaleOption = new MenuItem("Gray Scale");
         MenuItem invertColorOption = new MenuItem("Invert Color");
-
         generateMenu.getItems().addAll(histogramView,contrastSliderView,grayScaleOption,invertColorOption);
 
         menuBar = new MenuBar();
@@ -64,6 +64,15 @@ public class MenuView {
      */
     public MenuItem getSaveOptionButton() {
         return menuBar.getMenus().getFirst().getItems().get(1);
+    }
+
+    /**
+     * Exits the window
+     *
+     * @return The MenuItem exiting the app.
+     */
+    public MenuItem getExitOptionButton() {
+        return menuBar.getMenus().getFirst().getItems().get(2);
     }
 
     /**
