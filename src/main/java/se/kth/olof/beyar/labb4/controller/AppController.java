@@ -1,10 +1,5 @@
 package se.kth.olof.beyar.labb4.controller;
 
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.MenuBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
