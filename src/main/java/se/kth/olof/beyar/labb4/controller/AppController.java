@@ -1,5 +1,6 @@
 package se.kth.olof.beyar.labb4.controller;
 
+import javafx.scene.control.Slider;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -14,7 +15,8 @@ import se.kth.olof.beyar.labb4.view.StatusView;
 /**
  * The controller class for managing the application's overall behavior.
  */
-public class AppController {
+public class AppController
+{
     private Stage stage;
 
     private MenuModel mModel;
@@ -32,16 +34,15 @@ public class AppController {
      * Constructs an AppController object with the specified models, views, and stage.
      *
      * @param mModel The menu model.
-     * @param mView The menu view.
-     * @param stage The main application stage.
+     * @param mView  The menu view.
+     * @param stage  The main application stage.
      * @param pModel The picture model.
-     * @param pView The picture view.
+     * @param pView  The picture view.
      * @param sModel The status model.
-     * @param sView The status view.
+     * @param sView  The status view.
      */
-    public AppController(MenuModel mModel,MenuView mView,Stage stage, PictureModel pModel,
-                         PictureView pView, StatusModel sModel,StatusView sView)
-    {
+    public AppController(MenuModel mModel, MenuView mView, Stage stage, PictureModel pModel,
+                         PictureView pView, StatusModel sModel, StatusView sView) {
         this.mModel = mModel;
         this.mView = mView;
         this.stage = stage;
@@ -73,7 +74,7 @@ public class AppController {
     /**
      * Handles the action of opening and reading a file.
      */
-    private void handleOpenFile(){
+    private void handleOpenFile() {
         mModel.openAndReadFile(stage);
 
         if (mModel.isImageUploaded())
@@ -83,7 +84,7 @@ public class AppController {
     /**
      * Handles the action of saving a file.
      */
-    private void handleSaveFile(){
+    private void handleSaveFile() {
         mModel.saveFile(pModel.getImage());
     }
 
@@ -94,7 +95,7 @@ public class AppController {
         histogramContrastSwitch = 0;
         FlowPane displayHistogram = pView.displayHistogram(pModel.getImage());
         sModel.setStatusMsg("Histogram generated");
-        pView.displayControlAndImage(mModel.getChosenImageViewFromMenu().getImage(),pModel.getImage(),displayHistogram);
+        pView.displayControlAndImage(mModel.getChosenImageViewFromMenu().getImage(), pModel.getImage(), displayHistogram);
         reRenderApp();
     }
 
@@ -103,9 +104,11 @@ public class AppController {
      */
     private void handleConstrastSliderMenuButton() {
         histogramContrastSwitch = 1;
-        FlowPane displayContrast = pView.displayContrast(pModel.getImage());
+        Slider windowValue = pModel.getWindowSlider();
+        Slider levelValue = pModel.getLevelSlider();
+        FlowPane displayContrast = pView.createContrast(pModel.getImage(), windowValue, levelValue);
         sModel.setStatusMsg("Contrast generated");
-        pView.displayControlAndImage(mModel.getChosenImageViewFromMenu().getImage(),pModel.getImage(),displayContrast);
+        pView.displayControlAndImage(mModel.getChosenImageViewFromMenu().getImage(), pModel.getImage(), displayContrast);
         reRenderApp();
     }
 
@@ -127,7 +130,7 @@ public class AppController {
     /**
      * Handles the action of converting the image to grayscale.
      */
-    private void handleGrayScale(){
+    private void handleGrayScale() {
         ImageGrayScale gray = new ImageGrayScale();
 
         int[][] processedPicture = gray.processImage(pView.getOgPicture());
@@ -140,7 +143,7 @@ public class AppController {
     /**
      * Handles the action of inverting the colors of the image.
      */
-    private void handleInvertedColor(){
+    private void handleInvertedColor() {
         ImageInvertColor invert = new ImageInvertColor();
 
         int[][] processedPicture = invert.processImage(pView.getOgPicture());
@@ -153,16 +156,26 @@ public class AppController {
     /**
      * Re-renders the application UI by calling reRenderAppFunction in PictureView.
      */
-    public void reRenderApp() {
+    public void reRenderApp()
+    {
         FlowPane chosenDisplay;
-        if (histogramContrastSwitch==1) {
+        Slider windowValue = pModel.getWindowSlider();
+        Slider levelValue = pModel.getLevelSlider();
+        if (histogramContrastSwitch == 1) {
             sModel.setStatusMsg("Histogram generated");
-            chosenDisplay=pView.displayHistogram(pModel.getImage());
+            chosenDisplay = pView.displayHistogram(pModel.getImage());
         } else {
             sModel.setStatusMsg("Sliders generated");
-            chosenDisplay=pView.displayContrast(pModel.getImage());
+            chosenDisplay = pView.createContrast(pModel.getImage(), windowValue, levelValue);
         }
-        pView.reRenderApp(pModel.getImage(), mModel.getChosenImageViewFromMenu().getImage(),
-                stage,mView.getMenuBar(), sView.createStatus(sModel.getStatusMsg()),chosenDisplay);
+
+        pView.reRenderApp(
+                pModel.getImage(),
+                mModel.getChosenImageViewFromMenu().getImage(),
+                stage,
+                mView.getMenuBar(),
+                sView.createStatus(sModel.getStatusMsg()),
+                chosenDisplay
+        );
     }
 }

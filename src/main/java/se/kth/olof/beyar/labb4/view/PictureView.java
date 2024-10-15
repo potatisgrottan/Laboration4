@@ -236,16 +236,6 @@ public class PictureView
     }
 
     /**
-     * Displays the contrast adjustment view.
-     *
-     * @return A FlowPane containing the contrast sliders.
-     */
-    public FlowPane displayContrast(Image pImage){
-
-        return createContrast(pImage);
-    }
-
-    /**
      * Re-renders the application UI.
      */
     public void reRenderApp(Image pImage, Image mImage, Stage stage, MenuBar menuBar,FlowPane status, FlowPane chosenDisplay){
