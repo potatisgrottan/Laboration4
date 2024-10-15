@@ -17,16 +17,16 @@ import se.kth.olof.beyar.labb4.view.StatusView;
  */
 public class AppController
 {
-    private Stage stage;
+    private final Stage stage;
 
-    private MenuModel mModel;
-    private MenuView mView;
+    private final MenuModel mModel;
+    private final MenuView mView;
 
-    private PictureModel pModel;
-    private PictureView pView;
+    private final PictureModel pModel;
+    private final PictureView pView;
 
-    private StatusModel sModel;
-    private StatusView sView;
+    private final StatusModel sModel;
+    private final StatusView sView;
 
     private int histogramContrastSwitch;
 

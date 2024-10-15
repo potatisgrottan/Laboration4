@@ -29,10 +29,10 @@ public class MenuModel {
     public void openAndReadFile(Stage stage) {
         imageView = FileIO.openFile(stage);
 
-        if (imageView.getImage() != null)
-            imageUploaded = true;
-        else
+        if (imageView.getImage() == null)
             imageUploaded = false;
+        else
+            imageUploaded = true;
     }
 
     /**
