@@ -2,8 +2,17 @@ package se.kth.olof.beyar.labb4.utils;
 
 public class ImageInvertColor implements IProcessor {
 
+    /**
+     * Constructs an ImageInvertColor object.
+     */
     public ImageInvertColor() {}
 
+    /**
+     * Processes the original image to invert the colors.
+     *
+     * @param originalImage The original image represented as a 2D array of ARGB values.
+     * @return A 2D array of ARGB values representing the processed image with inverted colors.
+     */
     @Override
     public int[][] processImage(int[][] originalImage) {
         int height = originalImage.length;

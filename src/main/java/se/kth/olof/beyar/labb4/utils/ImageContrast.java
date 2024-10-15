@@ -1,15 +1,29 @@
 package se.kth.olof.beyar.labb4.utils;
 
-
+/**
+ * A utility class that adjusts the contrast of an image using window and level values.
+ */
 public class ImageContrast implements IProcessor {
     int valueWindowSlider;
     int valueLevelSlider;
 
+    /**
+     * Constructs an ImageContrast object with the specified window and level values.
+     *
+     * @param valueWindowSlider The window value for contrast adjustment.
+     * @param valueLevelSlider The level value for contrast adjustment.
+     */
     public ImageContrast(int valueWindowSlider, int valueLevelSlider){
         this.valueWindowSlider=valueWindowSlider;
         this.valueLevelSlider=valueLevelSlider;
     }
 
+    /**
+     * Processes the original image to adjust its contrast based on the window and level values.
+     *
+     * @param originalImage The original image represented as a 2D array of ARGB values.
+     * @return A 2D array of ARGB values representing the processed image with adjusted contrast.
+     */
     @Override
     public int[][] processImage(int[][] originalImage) {
         int height = originalImage.length;
@@ -48,8 +62,11 @@ public class ImageContrast implements IProcessor {
     }
 
     /**
-     * Clamp is a function designed to keep the calculations that are sent in the range 0-255
-     **/
+     * Clamps the value to the range 0-255.
+     *
+     * @param value The value to be clamped.
+     * @return The clamped value within the range 0-255.
+     */
     private int clamp(int value){
         return Math.max(0, Math.min(255,value));
     }

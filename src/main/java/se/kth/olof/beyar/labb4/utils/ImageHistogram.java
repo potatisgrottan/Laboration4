@@ -5,6 +5,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 
 // Code from https://java-buddy.blogspot.com/2015/07/display-images-histogram-on-javafx.html
+/**
+ * A utility class that generates histograms for an image's alpha, red, green, and blue color channels.
+ */
 public class ImageHistogram {
     private Image image;
 
@@ -20,6 +23,11 @@ public class ImageHistogram {
 
     private boolean success;
 
+    /**
+     * Constructs an ImageHistogram for the given image.
+     *
+     * @param src The source image for which the histogram is to be generated.
+     */
     public ImageHistogram(Image src) {
         image = src;
         success = false;
@@ -72,22 +80,47 @@ public class ImageHistogram {
         success = true;
     }
 
+    /**
+     * Checks if the histogram generation was successful.
+     *
+     * @return true if the histogram was successfully generated, false otherwise.
+     */
     public boolean isSuccess() {
         return success;
     }
 
+    /**
+     * Gets the series representing the alpha channel histogram.
+     *
+     * @return The series for the alpha channel histogram.
+     */
     public XYChart.Series getSeriesAlpha() {
         return seriesAlpha;
     }
 
+    /**
+     * Gets the series representing the red channel histogram.
+     *
+     * @return The series for the red channel histogram.
+     */
     public XYChart.Series getSeriesRed() {
         return seriesRed;
     }
 
+    /**
+     * Gets the series representing the green channel histogram.
+     *
+     * @return The series for the green channel histogram.
+     */
     public XYChart.Series getSeriesGreen() {
         return seriesGreen;
     }
 
+    /**
+     * Gets the series representing the blue channel histogram.
+     *
+     * @return The series for the blue channel histogram.
+     */
     public XYChart.Series getSeriesBlue() {
         return seriesBlue;
     }

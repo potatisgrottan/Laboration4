@@ -11,10 +11,20 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Utility class for file input and output operations related to images.
+ */
 public class FileIO
 {
 
-    // Från LoadImageIntoImageViewWithFileChooser.java
+    // Code from LoadImageIntoImageViewWithFileChooser.java
+
+    /**
+     * Opens a file chooser dialog to allow the user to select an image file, and loads the selected image into an ImageView.
+     *
+     * @param stage The stage on which the file chooser dialog will be displayed.
+     * @return An ImageView containing the loaded image, or an empty ImageView if no file was selected.
+     */
     public static ImageView openFile(Stage stage)
     {
         FileChooser fileChooser = new FileChooser();
@@ -41,6 +51,12 @@ public class FileIO
         return imageView;
     }
 
+    //code from save image example in canvas
+    /**
+     * Saves the given image to a file named "copy.png" in the current directory.
+     *
+     * @param image The image to be saved.
+     */
     public static void saveFile(Image image)
     {
         BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);

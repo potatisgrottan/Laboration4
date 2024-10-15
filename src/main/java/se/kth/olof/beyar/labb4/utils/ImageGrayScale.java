@@ -1,9 +1,21 @@
 package se.kth.olof.beyar.labb4.utils;
 
+/**
+ * A utility class that converts an image to grayscale.
+ */
 public class ImageGrayScale implements IProcessor {
 
+    /**
+     * Constructs an ImageGrayScale object.
+     */
     public ImageGrayScale() {}
 
+    /**
+     * Processes the original image to convert it to grayscale.
+     *
+     * @param originalImage The original image represented as a 2D array of ARGB values.
+     * @return A 2D array of ARGB values representing the processed image in grayscale.
+     */
     @Override
     public int[][] processImage(int[][] originalImage) {
         int height = originalImage.length;
