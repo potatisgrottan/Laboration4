@@ -164,6 +164,7 @@ public class AppController
         FlowPane chosenDisplay;
         Slider windowValue = pModel.getWindowSlider();
         Slider levelValue = pModel.getLevelSlider();
+
         if (histogramContrastSwitch == 0) {
             sModel.setStatusMsg("Histogram generated");
             chosenDisplay = pView.displayHistogram(pModel.getImage());

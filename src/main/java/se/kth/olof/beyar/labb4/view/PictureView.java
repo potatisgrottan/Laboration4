@@ -178,15 +178,6 @@ public class PictureView
     }
 
     /**
-     * Gets the ImageView displaying the image.
-     *
-     * @return The ImageView displaying the image.
-     */
-    public ImageView getImageView() {
-        return imageView;
-    }
-
-    /**
      * Displays an image preview.
      *
      * @return An ImageView containing the image preview.

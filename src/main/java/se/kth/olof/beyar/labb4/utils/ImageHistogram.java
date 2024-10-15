@@ -4,9 +4,9 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 
-// Code from https://java-buddy.blogspot.com/2015/07/display-images-histogram-on-javafx.html
 /**
  * A utility class that generates histograms for an image's alpha, red, green, and blue color channels.
+ * Code from <a href="https://java-buddy.blogspot.com/2015/07/display-images-histogram-on-javafx.html">...</a>
  */
 public class ImageHistogram {
     private Image image;
