@@ -4,8 +4,8 @@ package se.kth.olof.beyar.labb4.utils;
  * A utility class that adjusts the contrast of an image using window and level values.
  */
 public class ImageContrast implements IProcessor {
-    int valueWindowSlider;
-    int valueLevelSlider;
+    private int valueWindowSlider;
+    private int valueLevelSlider;
 
     /**
      * Constructs an ImageContrast object with the specified window and level values.
